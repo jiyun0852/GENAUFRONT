@@ -1,0 +1,28 @@
+.main-page {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .main-page h1 {
+    font-size: 36px;
+    color: #4CAF50;
+  }
+  
+  .main-page p {
+    font-size: 20px;
+    margin: 20px 0;
+  }
+  
+  .logout-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .logout-button:hover {
+    background-color: #d32f2f;
+  }
+  

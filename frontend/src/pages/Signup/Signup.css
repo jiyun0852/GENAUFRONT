@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+  }
+  
+  .background {
+    background: linear-gradient(225deg, #7A86D8 3.21%, #BBE4FF 98.8%);
+    width: 100vw;
+    height: 100vh;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .page {
+    width: 800px;
+    height: auto;
+    top: 230px;
+    left: 267px;
+    background-color: #5B5B5B;
+    border-radius: 6px;
+  }
+  
+  .titleWrap {
+    text-align: center;
+    font-family: Inter;
+    font-size: 30px;
+    font-weight: 600;
+    color: #ffffff;
+  
+    margin-top: 20px;
+  }
+  
+  .contentWrap {
+    margin-top: 26px;
+    flex: 1 0 1;
+  }
+  
+  .inputTitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    margin-top: 35px;
+    margin-left: 100px;
+  }
+  
+  .inputWrap {
+    display: flex;
+    align-items: center;
+    margin-left: 100px;
+    width: 600px; /* 동일한 너비 설정 */
+  }
+  
+  .inputWrap > input {
+    flex: 1; /* 입력란이 부모 컨테이너의 너비를 차지하도록 설정 */
+    height: 55px;
+    border-radius: 10px;
+    background-color: #F5F5F5;
+    font-size: 20px;
+    border: 2px solid #ccc;
+    transition: border-color 0.3s ease;
+    line-height: 100%;
+    padding-left: 2%;
+  }
+  
+  /* input 포커스 상태 */
+  .inputWrap > input:focus {
+    outline: none; /* 기본 포커스 아웃라인 제거 */
+    border-color: #7A86D8; /* 포커스 시 테두리 색상 변경 */
+  }
+  
+  /* 인증 코드 버튼 스타일 */
+  .authButton {
+    background-color: #5f6fc7; /* 버튼 배경색 */
+    color: white; /* 폰트 색상 */
+    border: none; /* 테두리 제거 */
+    border-radius: 64px; /* 버튼 모서리 둥글게 */
+    padding: 15px 30px; /* 버튼 안쪽 여백 */
+    font-size: 16px; /* 폰트 크기 */
+    cursor: pointer; /* 마우스를 올리면 손 모양 */
+    transition: background-color 0.3s ease; /* 배경색 변화 효과 */
+    margin-left: 15px; /* 입력란과 버튼 사이의 간격 */
+    flex-shrink: 0; /* 버튼이 수축하지 않도록 설정 */
+  }
+  
+  .authButton:hover {
+    background-color: #4a5bb5; /* 마우스 hover 시 버튼 배경색 변경 */
+  }
+  
+  /* 에러 메시지 스타일 */
+  .errorMessageWrap {
+    margin-left: 100px; /* 입력란과의 거리 조정 */
+    color: #ef0000;
+    font-size: 12px;
+    opacity: 1;
+  }
+  
+  /* 에러 메시지가 없는 경우 opacity를 0으로 설정하여 사라지게 함 */
+  .errorMessageWrap.hide {
+    opacity: 0;
+  }
+  
+  .buttonWrap {
+    margin-top: 40px;
+    margin-left: 150px;
+  }
+  
+  .bottomButton {
+    background-color: #7A86D8;
+    width: 500px;
+    height: 48px;
+    border: none;
+    font-weight: 700;
+    font-size: 20px;
+    border-radius: 64px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .bottomButton:disabled {
+    background-color: #dadada;
+    color: white;
+  }
+  
+  .registerWrap {
+    flex: 1 0 1;
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .registerTitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: #919191;
+    text-align: center;
+  }
+  
+  a {
+    text-decoration: none;
+    font-weight: 800 !important;
+    cursor: pointer;
+    color: white;
+  }
+  
+  a:hover {
+    color: #5f6fc7;
+  }
+  
