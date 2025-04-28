@@ -22,11 +22,10 @@ html, body {
   text-align: center;
   border-radius: 0;
   aspect-ratio: 1.6 / 1;
-  width: 80vw;
+  width: 80vw; /* 화면 비율로 크기 조정 */
   max-width: 500px;
   height: auto;
 }
-
 
 /* 헤더 */
 .login-box h2 {
@@ -62,8 +61,8 @@ html, body {
 }
 
 .forgot-password-button:hover {
-  color: #7A86D8;          /* 호버 시 색상 변경 */
-  text-decoration: none;   /* 호버 시 밑줄 제거 */
+  color: #7A86D8;
+  text-decoration: none;  
 }
 
 /* 입력란 스타일 */
@@ -75,10 +74,8 @@ html, body {
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
-  box-sizing: border-box; /* 버튼과 너비 계산 방식 동일하게 */
+  box-sizing: border-box;
 }
-
-
 
 /* 로그인 버튼 */
 .login-box button {
@@ -101,6 +98,7 @@ html, body {
   outline: none; 
 }
 
+/* 회원가입 링크 */
 .signup-container {
   color: white;
   display: flex;
@@ -121,6 +119,87 @@ html, body {
   color: #5f6fc7;
   text-decoration: none;
 }
+
+/* 모바일 대응 (768px 이하) */
+@media (max-width: 768px) {
+  .login-box {
+    width: 60vw; /* 화면에 맞춰 크기 변경 */
+    height: 50vw;
+    padding: 5vw 10vw;
+  }
+
+  .login-box h2 {
+    font-size: 3vw; /* 텍스트 크기 자동 조정 */
+    margin-bottom: 3vw;
+  }
+
+  .login-box label {
+    font-size: 2vw;
+    margin-top: 3vw;
+    margin-bottom: 1vw;
+  }
+
+  .login-box input {
+    font-size: 2vw;
+    padding: 2vw;
+  }
+
+  .login-box button {
+    font-size: 2vw;
+    padding: 2vw;
+  }
+
+  .signup-container {
+    gap: 2vw;
+  }
+
+  .signup-button {
+    font-size: 2vw;
+  }
+}
+
+/* 작은 모바일 (414px 이하) */
+@media (max-width: 414px) {
+  .login-box {
+    width: 80vw;
+    height: 70vw;
+    padding: 5vw 8vw;
+  }
+
+  .login-box h2 {
+    font-size: 3vw;
+  }
+
+  .login-box label {
+    font-size: 2vw;
+    margin-top: 2vw;
+    margin-bottom: 1vw;
+  }
+
+  .login-box input {
+    font-size: 3vw;
+    padding: 3vw;
+  }
+
+  .login-box button {
+    font-size: 2vw;
+    padding: 3vw;
+  }
+
+  .forgot-password-button{
+    font-size: 2vw;
+  }
+
+  .signup-container {
+    gap: 1vw;
+    font-size: 2vw;
+  }
+
+  .signup-button {
+    font-size: 2vw;
+  }
+}
+
 
 
 

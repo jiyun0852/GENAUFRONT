@@ -47,39 +47,55 @@ h1 {
   height: 33px;
 }
 
-/* 기본: PC용 */
+/* 기본: PC용 (데스크탑) */
 .fixed-box {
   position: fixed;
   right: 0px;
   bottom: 0px;
-  width: 92%;
-  height: 90%;
-  max-width: 1400px;
+  width: 1310px;
+  height: 530px;
   background: #f0f0f0;
   border: none;
   z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 40px;
 }
 
-/* 태블릿 (768px ~ 1024px) */
+/* 태블릿 (1024px 이하) */
 @media (max-width: 1024px) {
   .fixed-box {
-    width: 95%;
-    height: 85%;
-    max-width: 700px;
+    width: 800px;
+    height: 600px;
+    padding: 30px;
+  }
+}
+
+/* 모바일 (768px 이하) */
+@media (max-width: 768px) {
+  .fixed-box {
+    width: 560px;
+    height: 650px;
     padding: 20px;
   }
 }
 
-/* 모바일 (767px 이하) */
-@media (max-width: 767px) {
+/* 작은 모바일 (414px 이하) */
+@media (max-width: 414px) {
   .fixed-box {
-    width: 92%;
-    height: 80%;
-    max-width: 450px;
+    width: 280px;
+    height: 450px;
     padding: 15px;
+  }
+}
+
+/* 초소형 모바일 (375px 이하) */
+@media (max-width: 375px) {
+  .fixed-box {
+    width: 270px;
+    height: 420px;
+    padding: 10px;
   }
 }
 
