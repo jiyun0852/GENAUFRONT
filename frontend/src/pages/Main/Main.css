@@ -1,28 +1,138 @@
-.main-page {
-    text-align: center;
-    padding: 50px;
+/* 전체 배경 (좌우 그라데이션) */
+.main-background {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(to right, #7A86D8, #DFDFD2);
+  position: relative; /* fixed-box 위치 기준 */
+  overflow: hidden;
+}
+
+/* 메인 콘텐츠 */
+.main-content {
+  position: relative;
+  z-index: 10; /* fixed-box 위에 떠 있게 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  padding: 50px;
+}
+
+h1 {
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.main-content p {
+  font-size: 28px;
+  margin: 20px 0;
+}
+
+/* 플러스 버튼 이미지 스타일 */
+.plus-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.plus-button:hover{
+  color: #5b6bd5;  
+}
+
+.plus-button img {
+  width: 33px;
+  height: 33px;
+}
+
+/* 기본: PC용 */
+.fixed-box {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  width: 92%;
+  height: 90%;
+  max-width: 1400px;
+  background: #f0f0f0;
+  border: none;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 태블릿 (768px ~ 1024px) */
+@media (max-width: 1024px) {
+  .fixed-box {
+    width: 95%;
+    height: 85%;
+    max-width: 700px;
+    padding: 20px;
   }
-  
-  .main-page h1 {
-    font-size: 36px;
-    color: #4CAF50;
+}
+
+/* 모바일 (767px 이하) */
+@media (max-width: 767px) {
+  .fixed-box {
+    width: 92%;
+    height: 80%;
+    max-width: 450px;
+    padding: 15px;
   }
-  
-  .main-page p {
-    font-size: 20px;
-    margin: 20px 0;
-  }
-  
-  .logout-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #f44336;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .logout-button:hover {
-    background-color: #d32f2f;
-  }
-  
+}
+
+
+.account-icon {
+  color: white;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+/* 좌측 하단에 고정된 아이콘들 */
+.fixed-icons {
+  position: fixed;
+  left: 35px;
+  bottom: 20px; 
+  display: flex;
+  flex-direction: column; /* 세로로 정렬 */
+  gap: 20px; /* 아이콘끼리 간격 */
+  z-index: 1000; /* 다른 것보다 위에 올라오게 */
+}
+
+/* 아이콘 스타일 */
+.icon {
+  color: white; /* 아이콘 색상 */
+  cursor: pointer;
+  transition: transform 0.2s ease; /* 애니메이션 */
+}
+
+.user-name{
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 34px;
+  color: #FFFFFF;
+
+  position: absolute;
+  width: 129px;
+  height: 32px;
+  top: 138px;
+  text-align: center;
+}
+
+.plus-icon{
+  color: white;
+  padding: 10px;
+  margin-top: 30px;
+  margin-left: 25px;
+  position: absolute;
+  text-align: center;
+}
+
+
+
+
+

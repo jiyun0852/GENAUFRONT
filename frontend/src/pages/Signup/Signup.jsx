@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import './Signup.css';
 
 export default function Signup() {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState(''); // 사용자 이름
   const [email, setEmail] = useState('');
-  const [authCode, setAuthCode] = useState('');
+  const [code, setCode] = useState(''); // 인증 코드
   const [password, setPassword] = useState('');
   const [confirmPw, setConfirmPw] = useState('');
 
@@ -14,7 +14,9 @@ export default function Signup() {
   const [pwMatchValid, setPwMatchValid] = useState(false);
   const [notAllow, setNotAllow] = useState(true);
 
-  const handleUsername = (e) => setUsername(e.target.value);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleName = (e) => setName(e.target.value);
 
   const handleEmail = (e) => {
     const value = e.target.value;
@@ -23,8 +25,8 @@ export default function Signup() {
     setEmailValid(regex.test(value));
   };
 
-  const handleAuthCode = (e) => {
-    setAuthCode(e.target.value);
+  const handleCode = (e) => {
+    setCode(e.target.value);
   };
 
   const handlePw = (e) => {
@@ -40,8 +42,36 @@ export default function Signup() {
     setPwMatchValid(password === value);
   };
 
-  const onClickConfirmButton = () => {
-    alert('회원가입이 완료되었습니다.');
+  const onClickConfirmButton = async () => {
+    // 회원가입을 위한 POST 요청
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name, // name 필드 사용
+          email: email,
+          code: code, // code 필드 사용
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // 성공적으로 회원가입 된 경우
+        alert('회원가입이 완료되었습니다.');
+        // 필요시 로그인 페이지로 이동하도록 할 수 있음.
+        // 예: history.push("/login"); // react-router-dom v6 기준
+      } else {
+        // 실패한 경우 오류 메시지 표시
+        setErrorMessage(data.error || '알 수 없는 오류가 발생했습니다.');
+      }
+    } catch (error) {
+      setErrorMessage('네트워크 오류가 발생했습니다.');
+    }
   };
 
   useEffect(() => {
@@ -61,14 +91,16 @@ export default function Signup() {
 
           {/* 이메일 주소 */}
           <div className="inputTitle">이메일 주소</div>
-          <div className="inputWrap">
+          <div className="inputWrap emailWithButton">
             <input
               type="text"
               placeholder="you@example.com"
               value={email}
               onChange={handleEmail}
             />
+            <button className="authSendButton">인증번호 전송</button>
           </div>
+
           {!emailValid && email.length > 0 && (
             <div className="errorMessageWrap">올바른 이메일을 입력해주세요.</div>
           )}
@@ -81,8 +113,8 @@ export default function Signup() {
                 <input
                   type="text"
                   placeholder="이메일로 받은 인증코드를 입력하세요."
-                  value={authCode}
-                  onChange={handleAuthCode}
+                  value={code}
+                  onChange={handleCode}
                 />
                 <button className="authButton">확인</button>
               </div>
@@ -95,8 +127,8 @@ export default function Signup() {
             <input
               type="text"
               placeholder="이름 또는 닉네임"
-              value={username}
-              onChange={handleUsername}
+              value={name}
+              onChange={handleName}
             />
           </div>
 
@@ -142,6 +174,11 @@ export default function Signup() {
           </button>
         </div>
 
+        {/* 오류 메시지 표시 */}
+        {errorMessage && (
+          <div className="errorMessageWrap">{errorMessage}</div>
+        )}
+
         {/* 로그인 링크 */}
         <div className="registerWrap">
           <div className="registerTitle">
@@ -152,3 +189,4 @@ export default function Signup() {
     </div>
   );
 }
+
