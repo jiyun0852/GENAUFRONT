@@ -1,63 +1,125 @@
 .verify-code-background {
-    background: linear-gradient(to top right, #BBE4FF, #7A86D8);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+  background: linear-gradient(to top right, #BBE4FF, #7A86D8);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* 모바일용 여백 추가 */
+  box-sizing: border-box;
+}
+
+.verify-code-box {
+  background: white;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.verify-code-box h1 {
+  color: black;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.verify-code-box p {
+  color: black;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.verify-code-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.verify-submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #7A86D8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.verify-submit-button:hover {
+  background-color: #5f6fc7;
+}
+
+.countdown-timer {
+  margin: 5px 0 20px;
+  font-size: 14px;
+  color: #5B5B5B;
+  text-align: right;
+  font-weight: bold;
+}
+
+
+@media (max-width: 480px) {
   .verify-code-box {
-    background: white;
-    padding: 40px 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
+    padding: 24px;
+    border-radius: 6px;
   }
-  
+
   .verify-code-box h1 {
-    color: black;
-    font-size: 24px;
-    margin-bottom: 16px;
+    font-size: 17px;
   }
-  
+
   .verify-code-box p {
-    color: black;
-    font-size: 14px;
-    margin-bottom: 24px;
+    font-size: 12px;
+    margin-bottom: 14px;
   }
-  
-  .verify-code-input {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-  }
-  
+
+  .verify-code-input,
   .verify-submit-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #7A86D8;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 12px;
+    padding: 10px;
   }
-  
-  .verify-submit-button:hover {
-    background-color: #5f6fc7;
-  }
-  
+
   .countdown-timer {
-    margin: 5px 0 20px;
-    font-size: 14px;
-    color: #5B5B5B;
-    text-align: right;
-    font-weight: bold;
+    font-size: 11px;
+    margin-bottom: 13px;
   }
+}
+
+@media (max-width: 768px) {
+  .verify-code-box {
+    width: 90%;
+    padding: 32px;
+  }
+
+  @media (max-width: 320px) {
+  .verify-code-box {
+    padding: 20px;
+  }
+
+  .verify-code-box h1 {
+    font-size: 15px;
+  }
+
+  .verify-code-box p {
+    font-size: 12px;
+  }
+
+  .verify-code-input,
+  .verify-submit-button {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  .countdown-timer {
+    font-size: 10px;
+  }
+}
+}
+
   
