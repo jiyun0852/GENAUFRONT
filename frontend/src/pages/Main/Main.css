@@ -1,154 +1,241 @@
-/* 전체 배경 (좌우 그라데이션) */
+/* 전체 배경 */
 .main-background {
   width: 100%;
   height: 100vh;
   background: linear-gradient(to right, #7A86D8, #DFDFD2);
-  position: relative; /* fixed-box 위치 기준 */
+  position: relative;
   overflow: hidden;
+}
+
+/* 왼쪽 아이콘 그룹 */
+.left-icons {
+  position: absolute;
+  top: 2vw;
+  left: 2vw; /* 좌측 여백 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vw;
+  z-index: 10;
+}
+
+/* Account 아이콘 */
+.account-icon svg {
+  width: 6vw;
+  height: 6vw;
+  color: white;
+}
+
+/* 유저 네임 */
+.user-name {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.5vw;
+  color: white;
+  text-align: center;
+}
+
+/* 플러스 아이콘 */
+.plus-icon svg {
+  width: 3vw;
+  height: 3vw;
+  color: white;
+}
+
+/* 좌측 하단 고정 아이콘들 */
+.fixed-icons {
+  position: fixed;
+  left: 3.5vw;
+  bottom: 2vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vw;
+  z-index: 10;
+}
+
+.fixed-icons .icon {
+  width: 2vw;
+  height: 2vw;
+  color: white;
+}
+
+/* 고정된 우측 박스 */
+.fixed-box {
+  position: absolute;
+  top: 4vw; /* 위에 아이콘들과 여백 맞추기 */
+  left: 10vw; /* 아이콘 그룹 + 여백 만큼 이동 */
+  right: 0;
+  bottom: 0;
+  background: #f0f0f0;
+  padding: 3vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  z-index: 1;
 }
 
 /* 메인 콘텐츠 */
 .main-content {
-  position: relative;
-  z-index: 10; /* fixed-box 위에 떠 있게 */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
   text-align: center;
-  padding: 50px;
 }
 
 h1 {
-  font-size: 36px;
-  margin-bottom: 30px;
+  font-size: 2vw;
 }
 
 .main-content p {
-  font-size: 28px;
-  margin: 20px 0;
+  font-size: 1.3vw;
+  margin-top: 2vw;
 }
 
-/* 플러스 버튼 이미지 스타일 */
+/* 플러스 버튼 */
 .plus-button {
   border: none;
   background: none;
   cursor: pointer;
-  margin: 0 10px;
-}
-
-.plus-button:hover{
-  color: #5b6bd5;  
+  margin-left: 0.5vw;
 }
 
 .plus-button img {
-  width: 33px;
-  height: 33px;
+  width: 1.8vw;
+  height: 1.8vw;
 }
 
-/* 기본: PC용 (데스크탑) */
-.fixed-box {
-  position: fixed;
-  right: 0px;
-  bottom: 0px;
-  width: 1310px;
-  height: 530px;
-  background: #f0f0f0;
-  border: none;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-}
-
-/* 태블릿 (1024px 이하) */
+/* 반응형 */
 @media (max-width: 1024px) {
-  .fixed-box {
-    width: 800px;
-    height: 600px;
-    padding: 30px;
+  .account-icon svg {
+    width: 8vw;
+    height: 8vw;
   }
+  .user-name {
+    font-size: 2vw;
+  }
+  .plus-icon svg {
+    width: 4vw;
+    height: 4vw;
+  }
+  .fixed-box {
+    left: 12vw; /* 태블릿에서는 왼쪽 공간 조금 늘림 */
+  }
+
+  .fixed-icons .icon {
+    width: 3vw;
+    height: 3vw;
+   
+  }
+
+  .fixed-icons {
+    left: 5vw;
+    bottom: 4vw;
+    gap: 2vw;
+    
+  }
+
+  h1 {
+    font-size: 2.1vw;
+  }
+  
+  .main-content p {
+    font-size: 1.4vw;
+    margin-top: 2vw;
+  }
+
 }
 
-/* 모바일 (768px 이하) */
 @media (max-width: 768px) {
-  .fixed-box {
-    width: 560px;
-    height: 650px;
-    padding: 20px;
+  .account-icon svg {
+    width: 10vw;
+    height: 10vw;
   }
+  .user-name {
+    font-size: 2.5vw;
+  }
+  .plus-icon svg {
+    width: 4vw;
+    height: 4vw;
+  }
+  .fixed-box {
+    left: 14vw; /* 모바일에서는 더 늘림 */
+    top: 10vw;
+  }
+
+  .left-icons {
+    top: 4vw;
+  }
+
+  .fixed-icons .icon {
+    width: 3.5vw;
+    height: 3.5vw;
+   
+  }
+
+  
+.plus-button img {
+  width: 2.5vw;
+  height: 2.5vw;
 }
 
-/* 작은 모바일 (414px 이하) */
+  .fixed-icons {
+    left: 5.5vw;
+    bottom: 5vw;
+    gap: 2vw;
+    
+  }
+
+  h1 {
+    font-size: 3vw;
+  }
+  
+  .main-content p {
+    font-size: 2.3vw;
+    margin-top: 2vw;
+  }
+  
+}
+
 @media (max-width: 414px) {
+  .account-icon svg {
+    width: 12vw;
+    height: 12vw;
+  }
+  .user-name {
+    font-size: 3vw;
+  }
+  .plus-icon svg {
+    width: 6vw;
+    height: 6vw;
+  }
   .fixed-box {
-    width: 280px;
-    height: 450px;
-    padding: 15px;
+    left: 16vw;
+    top: 10vw;
+  }
+
+  .fixed-icons .icon {
+    width: 3.3vw;
+    height: 3.3vw;
+   
+  }
+
+  .fixed-icons {
+    left: 5.5vw;
+    bottom: 5vw;
+    gap: 1.5vw;
+    
+  }
+
+  
+.plus-button img {
+  width: 3vw;
+  height: 3vw;
+}
+
+  h1 {
+    font-size: 3.4vw;
+  }
+  
+  .main-content p {
+    font-size: 2.5vw;
+    margin-top: 2vw;
   }
 }
-
-/* 초소형 모바일 (375px 이하) */
-@media (max-width: 375px) {
-  .fixed-box {
-    width: 270px;
-    height: 420px;
-    padding: 10px;
-  }
-}
-
-
-.account-icon {
-  color: white;
-  padding: 10px;
-  margin-top: 20px;
-}
-
-/* 좌측 하단에 고정된 아이콘들 */
-.fixed-icons {
-  position: fixed;
-  left: 35px;
-  bottom: 20px; 
-  display: flex;
-  flex-direction: column; /* 세로로 정렬 */
-  gap: 20px; /* 아이콘끼리 간격 */
-  z-index: 1000; /* 다른 것보다 위에 올라오게 */
-}
-
-/* 아이콘 스타일 */
-.icon {
-  color: white; /* 아이콘 색상 */
-  cursor: pointer;
-  transition: transform 0.2s ease; /* 애니메이션 */
-}
-
-.user-name{
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 25px;
-  line-height: 34px;
-  color: #FFFFFF;
-
-  position: absolute;
-  width: 129px;
-  height: 32px;
-  top: 138px;
-  text-align: center;
-}
-
-.plus-icon{
-  color: white;
-  padding: 10px;
-  margin-top: 30px;
-  margin-left: 25px;
-  position: absolute;
-  text-align: center;
-}
-
-
-
-
-

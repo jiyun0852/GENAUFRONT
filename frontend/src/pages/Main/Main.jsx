@@ -9,24 +9,26 @@ function MainPage() {
   return (
     <div className="main-background">
 
-      {/* Account 아이콘 */}
-      <div className="account-icon">
-        <MdAccountCircle size={110} />
-      </div>
-      <div className= "user-name">
-        <p1>유저 이름</p1>
-      </div>
-      <div className="plus-icon">
-        <GoPlus size={45} />
+      {/* 왼쪽 세로 아이콘 그룹 */}
+      <div className="left-icons">
+        <div className="account-icon">
+          <MdAccountCircle />
+        </div>
+        <div className="user-name">
+          유저 이름
+        </div>
+        <div className="plus-icon">
+          <GoPlus />
+        </div>
       </div>
 
-      {/* 고정된 아이콘들 */}
+      {/* 좌측 하단 고정 아이콘들 */}
       <div className="fixed-icons">
-        <LuBell className="icon" size={40} />
-        <FiSettings className="icon" size={40} />
+        <LuBell className="icon" />
+        <FiSettings className="icon" />
       </div>
 
-      {/* 고정된 우측 하단 박스 */}
+      {/* 고정된 박스 */}
       <div className="fixed-box">
         <div className="main-content">
           <h1>
@@ -39,8 +41,11 @@ function MainPage() {
           <p>팀 스페이스에서 할 일을 공유하고 <br /> 성공적인 협업 경험을 쌓으세요!</p>
         </div>
       </div>
+
     </div>
   );
 }
 
 export default MainPage;
+
+
