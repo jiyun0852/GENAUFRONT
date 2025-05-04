@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Signup.css';
+
+const API_BASE = "http://localhost:8080";
 
 export default function Signup() {
   const [name, setName] = useState('');
@@ -17,55 +21,78 @@ export default function Signup() {
   const [pwMatchValid, setPwMatchValid] = useState(false);
   const [notAllow, setNotAllow] = useState(true);
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const [infoMessage, setInfoMessage] = useState('');
+  const [toastShown, setToastShown] = useState(false); // ✅ 인증버튼 누른 후 토스트 1회 제한용
+
+  const navigate = useNavigate();
 
   const handleName = (e) => setName(e.target.value);
 
-  const handleEmail = async (e) => {
+  const handleEmail = (e) => {
     const value = e.target.value;
     setEmail(value);
+
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValid = regex.test(value);
     setEmailValid(isValid);
+
     setEmailAvailable(false);
     setCodeSent(false);
     setCodeVerified(false);
-    setInfoMessage('');
-    setErrorMessage('');
-
-    if (isValid) {
-      try {
-        const response = await fetch(`/auth/check-email?email=${encodeURIComponent(value)}`);
-        const data = await response.json();
-        if (data.exists) {
-          setErrorMessage('이미 사용 중인 이메일입니다.');
-        } else {
-          setEmailAvailable(true);
-          setInfoMessage('사용 가능한 이메일입니다.');
-        }
-      } catch (error) {
-        setErrorMessage('이메일 중복 확인 중 오류가 발생했습니다.');
-      }
-    }
+    setToastShown(false); // 
   };
 
   const handleSendCode = async () => {
+    if (!emailValid) {
+      if (!toastShown) {
+        toast.error('유효한 이메일 형식이 아닙니다.', { toastId: 'invalid-email' });
+        setToastShown(true);
+      }
+      return;
+    }
+
     try {
-      const response = await fetch('/auth/send-code', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      const data = await response.json();
-      if (data.verified) {
-        setCodeSent(true);
-        setInfoMessage('인증 코드가 이메일로 전송되었습니다.');
+      const checkResponse = await fetch(
+        `${API_BASE}/auth/check-email?email=${encodeURIComponent(email)}`
+      );
+      const text = await checkResponse.text();
+      const data = JSON.parse(text);
+
+      if (data.exists) {
+        if (!toastShown) {
+          toast.error('이미 사용 중인 이메일입니다.', { toastId: 'email-exists' });
+          setToastShown(true);
+        }
+        return;
       } else {
-        setErrorMessage('인증 코드 전송에 실패했습니다.');
+        setEmailAvailable(true);
       }
     } catch (error) {
-      setErrorMessage('인증 코드 전송 중 오류가 발생했습니다.');
+      if (!toastShown) {
+        toast.error('이메일 중복 확인 중 오류가 발생했습니다.', { toastId: 'check-fail' });
+        setToastShown(true);
+      }
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE}/auth/send-code`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email }),
+      });
+
+      const text = await response.text();
+
+      if (!response.ok) throw new Error(`전송 실패: ${response.status}`);
+
+      const data = JSON.parse(text);
+      setCodeSent(true);
+      toast.success(data.message || '인증번호가 전송되었습니다.', { toastId: 'code-sent' });
+      setToastShown(true);
+    } catch (error) {
+      toast.error('인증번호 전송 중 오류', { toastId: 'code-fail' });
+      console.error(error);
     }
   };
 
@@ -73,20 +100,22 @@ export default function Signup() {
 
   const handleVerifyCode = async () => {
     try {
-      const response = await fetch('/auth/verify-code', {
+      const response = await fetch(`${API_BASE}/auth/verify-code`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, code }),
       });
       const data = await response.json();
-      if (data.verified) {
+
+      if (response.ok && data.verified) {
         setCodeVerified(true);
-        setInfoMessage('인증이 완료되었습니다.');
+        toast.success('인증이 완료되었습니다.', { toastId: 'code-ok' });
       } else {
-        setErrorMessage('인증 코드가 올바르지 않습니다.');
+        toast.error(data.error || '인증번호가 올바르지 않습니다.', { toastId: 'code-wrong' });
       }
     } catch (error) {
-      setErrorMessage('인증 코드 검증 중 오류가 발생했습니다.');
+      toast.error('인증번호 확인 중 오류', { toastId: 'code-verify-fail' });
+      console.error(error);
     }
   };
 
@@ -105,27 +134,22 @@ export default function Signup() {
 
   const onClickConfirmButton = async () => {
     try {
-      const response = await fetch('/auth/signup', {
+      const response = await fetch(`${API_BASE}/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          code,
-          password,
-        }),
+        body: JSON.stringify({ name, email, code, password }),
       });
-
       const data = await response.json();
 
       if (response.ok) {
-        alert('회원가입이 완료되었습니다.');
-        // 로그인 페이지로 이동 등의 추가 작업 가능
+        toast.success('회원가입이 완료되었습니다.', { toastId: 'signup-ok' });
+        navigate('/login');
       } else {
-        setErrorMessage(data.error || '알 수 없는 오류가 발생했습니다.');
+        toast.error(data.error || '회원가입 실패', { toastId: 'signup-fail' });
       }
     } catch (error) {
-      setErrorMessage('네트워크 오류가 발생했습니다.');
+      toast.error('회원가입 중 네트워크 오류', { toastId: 'signup-network' });
+      console.error(error);
     }
   };
 
@@ -143,25 +167,24 @@ export default function Signup() {
         <div className="titleWrap">이메일과 비밀번호를 입력해주세요</div>
 
         <div className="contentWrap">
-          {/* 이메일 주소 */}
           <div className="inputTitle">이메일 주소</div>
           <div className="inputWrap emailWithButton">
             <input
-              type="text"
+              type="email"
               placeholder="you@example.com"
               value={email}
               onChange={handleEmail}
+              required
             />
             <button
               className="authSendButton"
               onClick={handleSendCode}
-              disabled={!emailValid || !emailAvailable}
+              disabled={!emailValid}
             >
               인증번호 전송
             </button>
           </div>
 
-          {/* 인증코드 입력란 및 버튼 */}
           {codeSent && (
             <>
               <div className="inputTitle">인증코드</div>
@@ -171,15 +194,13 @@ export default function Signup() {
                   placeholder="이메일로 받은 인증코드를 입력하세요."
                   value={code}
                   onChange={handleCode}
+                  required
                 />
-                <button className="authButton" onClick={handleVerifyCode}>
-                  확인
-                </button>
+                <button className="authButton" onClick={handleVerifyCode}>확인</button>
               </div>
             </>
           )}
 
-          {/* 사용자명 */}
           <div className="inputTitle">사용자명</div>
           <div className="inputWrap">
             <input
@@ -187,10 +208,10 @@ export default function Signup() {
               placeholder="이름 또는 닉네임"
               value={name}
               onChange={handleName}
+              required
             />
           </div>
 
-          {/* 비밀번호 */}
           <div className="inputTitle">비밀번호</div>
           <div className="inputWrap">
             <input
@@ -198,6 +219,7 @@ export default function Signup() {
               placeholder="영문, 숫자, 특수문자 포함 8자 이상"
               value={password}
               onChange={handlePw}
+              required
             />
           </div>
           {!passwordValid && password.length > 0 && (
@@ -206,7 +228,6 @@ export default function Signup() {
             </div>
           )}
 
-          {/* 비밀번호 확인 */}
           <div className="inputTitle">비밀번호 확인</div>
           <div className="inputWrap">
             <input
@@ -214,6 +235,7 @@ export default function Signup() {
               placeholder="위에서 설정한 비밀번호를 입력하세요."
               value={confirmPw}
               onChange={handleConfirmPw}
+              required
             />
           </div>
           {!pwMatchValid && confirmPw.length > 0 && (
@@ -221,30 +243,23 @@ export default function Signup() {
           )}
         </div>
 
-        {/* 가입 버튼 */}
         <div className="buttonWrap">
-          <button
-            onClick={onClickConfirmButton}
-            disabled={notAllow}
-            className="bottomButton"
-          >
+          <button onClick={onClickConfirmButton} disabled={notAllow} className="bottomButton">
             가입
           </button>
         </div>
 
-        {/* 정보 및 오류 메시지 표시 */}
-        {infoMessage && <div className="infoMessageWrap">{infoMessage}</div>}
-        {errorMessage && <div className="errorMessageWrap">{errorMessage}</div>}
-
-        {/* 로그인 링크 */}
         <div className="registerWrap">
           <div className="registerTitle">
             계정이 있으신가요? <Link to="/Login">로그인하기</Link>
           </div>
         </div>
       </div>
+
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 }
+
 
 

@@ -5,6 +5,7 @@ import Signup from './pages/Signup/Signup';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import VerifyCode from './pages/VerifyCode/VerifyCode';
 import Main from './pages/Main/Main';
+import ChangePassword from './pages/ChangePassword/ChangePassword';
 import { ToastContainer } from 'react-toastify'; 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} /> 
         <Route path="/verifycode" element={<VerifyCode />} />
         <Route path="/main" element={<Main />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
       </Routes>
     </Router>
   );
