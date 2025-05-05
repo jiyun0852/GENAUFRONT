@@ -1,4 +1,3 @@
-/* 전체 배경 */
 .main-background {
   width: 100%;
   height: 100vh;
@@ -7,45 +6,84 @@
   overflow: hidden;
 }
 
-/* 왼쪽 아이콘 그룹 */
 .left-icons {
   position: absolute;
   top: 2vw;
-  left: 2vw; /* 좌측 여백 */
+  left: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1vw;
+  align-items: flex-start;
   z-index: 10;
 }
 
-/* Account 아이콘 */
-.account-icon svg {
-  width: 6vw;
-  height: 6vw;
-  color: white;
+.bookmark-user-group {
+  /* 기존: display: flex; align-items: center; */
+  display: flex;
+  align-items: flex-start;   /* 위쪽 기준으로 정렬 */
+  
 }
 
-/* 유저 네임 */
+.profile-stack {
+  display: flex;
+  flex-direction: column;    /* 프로필들을 세로로 쌓음 */
+  align-items: center;       /* 가운데 정렬 */
+  gap: 0.8vw;  
+  margin-left: 2vw;            
+     
+}
+
+.bookmark-shape {
+  width: 2vw;
+  height: 8vw;
+  background-color: white;
+  border-radius: 0 20px 20px 0;
+  position: relative;
+  left: -1.4vw;
+}
+
+.user-icon-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.3vw;
+}
+
+.profile-circle {
+  width: 5.5vw;
+  height: 5.5vw;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2vw;
+  font-weight: bold;
+  color: white;
+  border: 3px solid white;
+}
+
 .user-name {
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 700;
   font-size: 1.5vw;
   color: white;
   text-align: center;
+  margin-top: 0.5vw;
 }
 
-/* 플러스 아이콘 */
 .plus-icon svg {
   width: 3vw;
   height: 3vw;
   color: white;
+  cursor: pointer;
+  margin-top: 0.8vw;
+  margin-left: 0 !important;
 }
 
-/* 좌측 하단 고정 아이콘들 */
 .fixed-icons {
   position: fixed;
-  left: 3.5vw;
+  left: 3.7vw;
   bottom: 2vw;
   display: flex;
   flex-direction: column;
@@ -57,13 +95,13 @@
   width: 2vw;
   height: 2vw;
   color: white;
+  margin-left: 0.3vw;
 }
 
-/* 고정된 우측 박스 */
 .fixed-box {
   position: absolute;
-  top: 4vw; /* 위에 아이콘들과 여백 맞추기 */
-  left: 10vw; /* 아이콘 그룹 + 여백 만큼 이동 */
+  top: 4vw;
+  left: 10vw;
   right: 0;
   bottom: 0;
   background: #f0f0f0;
@@ -75,7 +113,6 @@
   z-index: 1;
 }
 
-/* 메인 콘텐츠 */
 .main-content {
   text-align: center;
 }
@@ -89,7 +126,6 @@ h1 {
   margin-top: 2vw;
 }
 
-/* 플러스 버튼 */
 .plus-button {
   border: none;
   background: none;
@@ -102,11 +138,63 @@ h1 {
   height: 1.8vw;
 }
 
+.profile-row {
+  position: relative;        /* shape를 절대 위치로 놓기 위한 부모 */
+  display: flex;
+  align-items: center;
+}
+
+.profile-row .bookmark-shape {
+  position: absolute;        /* 이제 레이아웃 흐름에 영향을 주지 않음 */
+  left: -2vw;                /* shape 너비만큼 프로필 왼쪽으로 이동 */
+  top: 0;                    /* profile-row 높이에 맞춰서 정렬 */
+  margin: 0;                 /* 기존의 left/margin 설정 제거 */
+}
+
+.profile-scroll {
+  max-height: calc(100vh - 10vw) !important; /* 종 아이콘 위치 고려 */
+  overflow-y: auto;
+  position: relative;
+  padding-right: 1.5vw;
+}
+
+/* 얇은 스크롤바 (WebKit) */
+.profile-scroll::-webkit-scrollbar {
+  width: 0.4vw;
+}
+.profile-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.profile-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.6);
+  border-radius: 0.2vw;
+}
+
+.bookmark-shape {
+  position: absolute;
+  left: -1.4vw;
+  width: 2vw;
+  height: 8vw;
+  background: white;
+  border-radius: 0 20px 20px 0;
+  transition: top 0.2s ease;
+}
+/* === Override: dynamic max‑height so scrollbar appears just before bell icon === */
+.profile-scroll{
+  max-height: calc(100vh - 6vw); /* 상단 2vw + 하단 4vw 여백 고려 */
+}
+
 /* 반응형 */
 @media (max-width: 1024px) {
-  .account-icon svg {
-    width: 8vw;
-    height: 8vw;
+  .bookmark-shape {
+    width: 2.3vw;
+    height: 9vw;
+    left: -1.7vw;
+  }
+  .profile-circle {
+    width: 7vw;
+    height: 7vw;
+    font-size: 2.5vw;
   }
   .user-name {
     font-size: 2vw;
@@ -114,128 +202,138 @@ h1 {
   .plus-icon svg {
     width: 4vw;
     height: 4vw;
+    margin-left: 4vw;
   }
   .fixed-box {
-    left: 12vw; /* 태블릿에서는 왼쪽 공간 조금 늘림 */
+    left: 12vw;
   }
-
   .fixed-icons .icon {
     width: 3vw;
     height: 3vw;
-   
+    margin-left: 0.8vw;
   }
-
-  .fixed-icons {
-    left: 5vw;
-    bottom: 4vw;
-    gap: 2vw;
-    
-  }
-
   h1 {
     font-size: 2.1vw;
   }
-  
   .main-content p {
     font-size: 1.4vw;
-    margin-top: 2vw;
+  }
+  .plus-button img {
+    width: 2.2vw;
+    height: 2.2vw;
   }
 
+  .profile-row .bookmark-shape {
+    left: -2.3vw;            /* shape 크기 변화에 맞춰 */
+  }
+
+  .profile-scroll{
+    max-height:calc(100vh - 12vw)!important; 
+    padding-right: 1.8vw;
+  }
+ 
 }
 
 @media (max-width: 768px) {
-  .account-icon svg {
-    width: 10vw;
-    height: 10vw;
+  .bookmark-shape {
+    width: 2.6vw;
+    height: 11vw;
+    left: -1.8vw;
+  }
+  .profile-circle {
+    width: 8.5vw;
+    height: 8.5vw;
+    font-size: 3vw;
   }
   .user-name {
-    font-size: 2.5vw;
+    font-size: 2.3vw;
   }
   .plus-icon svg {
-    width: 4vw;
-    height: 4vw;
+    width: 5vw;
+    height: 5vw;
+    margin-left: 4.8vw;
   }
   .fixed-box {
-    left: 14vw; /* 모바일에서는 더 늘림 */
-    top: 10vw;
+    left: 14vw;
   }
-
-  .left-icons {
-    top: 4vw;
-  }
-
   .fixed-icons .icon {
     width: 3.5vw;
     height: 3.5vw;
-   
+    margin-left: 1.vw;
   }
-
-  
-.plus-button img {
-  width: 2.5vw;
-  height: 2.5vw;
-}
-
-  .fixed-icons {
-    left: 5.5vw;
-    bottom: 5vw;
-    gap: 2vw;
-    
-  }
-
   h1 {
-    font-size: 3vw;
+    font-size: 2.6vw;
   }
-  
   .main-content p {
     font-size: 2.3vw;
-    margin-top: 2vw;
   }
-  
+  .plus-button img {
+    width: 2.5vw;
+    height: 2.5vw;
+  }
+
+  .user-icon-name {
+    margin-left: 0vw;
+  }
+
+  .profile-row .bookmark-shape {
+    left: -2.6vw;
+  }
+
+  .profile-scroll{
+    max-height:calc(100vh - 12vw)!important; 
+    padding-right: 2.4vw;
+  }  
+
 }
 
-@media (max-width: 414px) {
-  .account-icon svg {
-    width: 12vw;
-    height: 12vw;
+@media (max-width: 480px) {
+  .bookmark-shape {
+    width: 3vw;
+    height: 13vw;
+  }
+
+  .profile-circle {
+    width: 10vw;
+    height: 10vw;
+    font-size: 4vw;
   }
   .user-name {
-    font-size: 3vw;
+    font-size: 2.8vw;
   }
   .plus-icon svg {
     width: 6vw;
     height: 6vw;
+    margin-left: 4.2vw;
   }
-  .fixed-box {
-    left: 16vw;
-    top: 10vw;
-  }
-
-  .fixed-icons .icon {
-    width: 3.3vw;
-    height: 3.3vw;
-   
-  }
-
-  .fixed-icons {
-    left: 5.5vw;
-    bottom: 5vw;
-    gap: 1.5vw;
-    
-  }
-
-  
-.plus-button img {
-  width: 3vw;
-  height: 3vw;
-}
-
   h1 {
-    font-size: 3.4vw;
+    font-size: 3.5vw;
   }
-  
   .main-content p {
-    font-size: 2.5vw;
-    margin-top: 2vw;
+    font-size: 3vw;
+  }
+  .plus-button img {
+    width: 3.5vw;
+    height: 3.5vw;
+  }
+  .fixed-icons .icon {
+    width: 4vw;
+    height: 4vw;
+    margin-left: 1.7vw;
+    margin-bottom: 1.2vw;
+  }
+
+  .user-icon-name {
+    margin-left: -1vw;
+  }
+
+  .profile-row .bookmark-shape {
+    left: -3vw;
+  }
+
+  .profile-scroll{
+    max-height:calc(100vh - 12vw);
+    padding-right: 2.4vw;
   }
 }
+

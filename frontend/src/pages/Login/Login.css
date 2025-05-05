@@ -124,7 +124,7 @@ html, body {
 @media (max-width: 768px) {
   .login-box {
     width: 60vw; /* 화면에 맞춰 크기 변경 */
-    height: 50vw;
+    height: 55vw;
     padding: 5vw 10vw;
   }
 
@@ -151,9 +151,14 @@ html, body {
 
   .signup-container {
     gap: 2vw;
+    font-size: 2vw;
   }
 
   .signup-button {
+    font-size: 2vw;
+  }
+
+  .forgot-password-button{
     font-size: 2vw;
   }
 }
@@ -162,17 +167,17 @@ html, body {
 @media (max-width: 414px) {
   .login-box {
     width: 80vw;
-    height: 70vw;
+    height: 75vw;
     padding: 5vw 8vw;
   }
 
   .login-box h2 {
-    font-size: 3vw;
+    font-size: 3.5vw;
   }
 
   .login-box label {
-    font-size: 2vw;
-    margin-top: 2vw;
+    font-size: 2.5vw;
+    margin-top: 2.5vw;
     margin-bottom: 1vw;
   }
 

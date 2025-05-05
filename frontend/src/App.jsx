@@ -7,6 +7,7 @@ import VerifyCode from './pages/VerifyCode/VerifyCode';
 import Main from './pages/Main/Main';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
 import { ToastContainer } from 'react-toastify'; 
+import TeamSpace from './components/TeamSpace/TeamSpace';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/verifycode" element={<VerifyCode />} />
         <Route path="/main" element={<Main />} />
         <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/team/:teamId" element={<TeamSpace />} />
       </Routes>
     </Router>
   );

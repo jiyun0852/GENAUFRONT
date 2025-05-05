@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,22 +18,28 @@ function Login() {
         },
         credentials: 'include',
         body: JSON.stringify({
-          email: email,
-          password: password,
+          email,
+          password,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data.message || '로그인 실패');  // 실패 시 토스트 메시지만 표시
+        toast.error(data.message || '로그인 실패');
         return;
       }
 
-      toast.success('로그인 성공!');  // 성공 시 토스트 메시지만 표시
+      // ✅ 유저 이름 로컬스토리지 저장
+      localStorage.setItem('userId', data.userId);
+      localStorage.setItem('username', data.name);
+
+      toast.success('로그인 성공!');
+      console.log('[LOGIN RESPONSE]', data);
+
       navigate('/Main');
     } catch (err) {
-      toast.error('서버 오류가 발생했어요.');  // 에러 시 토스트 메시지만 표시
+      toast.error('서버 오류가 발생했어요.');
     }
   };
 
