@@ -82,6 +82,26 @@
   /* 다음/종료 버튼 (텍스트만) */
   .guide-next{align-self:flex-end;margin-top:1vw;background:none;color:#5A5A5A;border:none;padding:0;font-size:1.1vw;font-weight:700;cursor:pointer;}
   .guide-next:hover{text-decoration:underline;opacity:.85;}
+
+/* 기존 정의를 찾아서 ↓ 값만 수정 */
+.team-background .member-panel{
+  position:fixed;
+  top:8.1vw; right:0; bottom:0;
+  width:23vw;
+  background:#C1C5E0;
+  overflow-y:auto;
+  z-index:4;          /* ← 1 → 4 (fixed‑box(1)·overlay(2)보다 위) */
+}
+
+/* 아이콘은 패널 위에 남도록 한 칸만 더 높게 */
+.invite-icon{
+  position:fixed; right:1.8vw; bottom:2vw;
+  width:2.5vw; height:2.5vw;
+  color:#5A5A5A; cursor:pointer;
+  z-index:5;          /* 패널보다 1 크게 */
+}
+  
+
   @media (max-width: 1024px) { 
     .team-background .profile-scroll { max-height: calc(100vh - 18vw); padding-right:1.8vw;} 
     .team-background .team-overlay{height:5vw;left:12vw;}
@@ -92,12 +112,15 @@
     .guide-next{font-size:1.6vw;}
     .bubble-file{right:3vw;}
     .bubble-people{right:0vw;top:10vw;}
+    .team-background .member-panel{
+      width:33vw;top:9.2vw;
+    }
     
 }
   @media (max-width:  768px) { 
     .team-background .profile-scroll { max-height: calc(100vh - 12vw)!important; padding-right:2.6vw;}
-    .team-background .team-overlay{height:5vw;left:14vw;}
-    .team-background .team-overlay .ov-icon{width:3vw;height:3vw;}
+    .team-background .team-overlay{height:7vw;left:14vw;}
+    .team-background .team-overlay .ov-icon{width:4vw;height:4vw;}
     .team-background .manage-btn{font-size:2vw;padding:1.4vw 5vw;border-radius:3.2vw;} 
     .guide-label{font-size:2vw;}
     .guide-closeX{width:4vw;height:4vw;font-size:3vw;}
@@ -105,11 +128,13 @@
     .guide-next{font-size:1.8vw;}
     .bubble-file{right:3vw;}
     .bubble-people{right:0.2vw;top:10vw;}
+    .team-background .member-panel{width:40vw;top:11.3vw;}
+    .invite-icon{width:5vw;height:5vw;}
 }
   @media (max-width:  480px) { 
     .team-background .profile-scroll { max-height: calc(100vh - 15vw)!important; padding-right:1.5vw;} 
-    .team-background .team-overlay{height:8vw;left:14vw;}
-    .team-background .team-overlay .ov-icon{width:4.5vw;height:4.5vw;}
+    .team-background .team-overlay{height:12vw;left:14vw;}
+    .team-background .team-overlay .ov-icon{width:6vw;height:6vw;}
     .team-background .manage-btn{font-size:3vw;padding:2.2vw 6.5vw;border-radius:4.5vw;}
     .guide-label{font-size:3vw;}
     .guide-closeX{width:5.5vw;height:5.5vw;font-size:4vw;}
@@ -117,5 +142,10 @@
     .guide-next{font-size:3vw;}
     .bubble-file{right:5.5vw;top:13vw;}
     .bubble-people{right:1.5vw;top:13vw;}
+    .team-background .member-panel{width:55vw;}
+    .invite-icon{width:7vw;height:7vw;}
+    .team-background .member-panel{
+      top:16.2vw;
+    }
 }
   
