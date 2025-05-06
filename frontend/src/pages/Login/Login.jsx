@@ -30,7 +30,7 @@ function Login() {
         return;
       }
 
-      // ✅ 유저 이름 로컬스토리지 저장
+      // 유저 이름 로컬스토리지 저장
       localStorage.setItem('userId', data.userId);
       localStorage.setItem('username', data.name);
 

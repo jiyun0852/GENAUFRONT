@@ -9,13 +9,13 @@ function ResetPassword() {
 
   const handleSendCode = async () => {
     try {
-      // ✅ 유효한 이메일인지 검사
+      //  유효한 이메일인지 검사
       if (!email || !email.includes('@')) {
         setPopupMessage('유효한 이메일을 입력해주세요.');
         return;
       }
 
-      // ✅ 이메일 중복 확인 요청 로그 출력
+      //  이메일 중복 확인 요청 로그 출력
       const checkUrl = `http://localhost:8080/auth/check-email?email=${encodeURIComponent(email)}`;
       console.log('[CHECK EMAIL] GET', checkUrl);
 
@@ -28,7 +28,7 @@ function ResetPassword() {
         throw new Error('가입되지 않은 이메일입니다.');
       }
 
-      // ✅ 인증코드 전송 요청 로그 출력
+      //  인증코드 전송 요청 로그 출력
       const sendCodeUrl = 'http://localhost:8080/auth/send-code';
       const requestBody = { email };
       const requestHeaders = { 'Content-Type': 'application/json' };

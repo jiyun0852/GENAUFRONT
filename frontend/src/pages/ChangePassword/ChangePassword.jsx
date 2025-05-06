@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ChangePassword.css';
 
-
 function ChangePassword() {
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -11,7 +10,7 @@ function ChangePassword() {
   const navigate = useNavigate();
   const { email, code } = useLocation().state || {};
 
-  // ✅ 비밀번호 형식 검사 함수
+  //  비밀번호 형식 검사 함수
   const validatePassword = (value) => {
     const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+]).{8,20}$/;
     if (!regex.test(value)) {
@@ -22,7 +21,7 @@ function ChangePassword() {
   };
 
   const handleChangePassword = async () => {
-    // ✅ 비밀번호 형식 재검사 (직접 검사해야 사용자가 검사 안 한 경우 대비)
+    //  비밀번호 형식 재검사 (직접 검사해야 사용자가 검사 안 한 경우 대비)
     const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+]).{8,20}$/;
     const isValid = regex.test(password);
     if (!isValid) {
@@ -68,7 +67,7 @@ function ChangePassword() {
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
-              validatePassword(e.target.value); // ✅ 실시간 검사
+              validatePassword(e.target.value); //  실시간 검사
             }}
           />
           {formatError && (

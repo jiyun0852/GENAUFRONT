@@ -21,7 +21,7 @@ export default function Signup() {
   const [pwMatchValid, setPwMatchValid] = useState(false);
   const [notAllow, setNotAllow] = useState(true);
 
-  const [toastShown, setToastShown] = useState(false); // ✅ 인증버튼 누른 후 토스트 1회 제한용
+  const [toastShown, setToastShown] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -89,7 +89,7 @@ export default function Signup() {
       const data = JSON.parse(text);
       setCodeSent(true);
       toast.success(data.message || '인증번호가 전송되었습니다.', { toastId: 'code-sent' });
-      setToastShown(true);
+     setToastShown(true);
     } catch (error) {
       toast.error('인증번호 전송 중 오류', { toastId: 'code-fail' });
       console.error(error);

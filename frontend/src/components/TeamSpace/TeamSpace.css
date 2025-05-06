@@ -1,151 +1,256 @@
 .team-background {
-    /* 원래 Main과 동일한 배경/레이아웃 유지 */
-    background: linear-gradient(to right, #7A86D8, #DFDFD2);
-    width: 100%;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  /* TeamSpace 전용 스크롤 컨테이너 */
-  .team-background .profile-scroll{
-    max-height:calc(100vh - 15vw); /* 종+설정 아이콘 위 여백 */
-    overflow-y:auto;position:relative;margin-right:-0.4vw;padding-right:1.5vw;
-  }
-  .team-background .team-background .profile-scroll::-webkit-scrollbar{width:0.4vw;}
-  .team-background .profile-scroll::-webkit-scrollbar-track{background:transparent;}
-  .team-background .profile-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.6);border-radius:0.2vw;}
-  
-  .team-background .bookmark-shape{width:2vw;height:8vw;background:#fff;border-radius:0 20px 20px 0;transition:top .25s ease;}
-  /* webkit 얇은 스크롤 */
-  .profile-scroll::-webkit-scrollbar{width:0.4vw;}
-  .profile-scroll::-webkit-scrollbar-track{background:transparent;}
-  .profile-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.6);border-radius:0.2vw;}
-
-  /* === 상단 오버레이 바 === */
-.team-background .team-overlay{
-    position:absolute;
-    left:10vw;          /* fixed-box 와 동일 offset */
-    top:4vw;            /* fixed-box top 과 동일 */
-    right:0;
-    height:4vw;
-    background:#C1C5E0;
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    padding-right:2vw;
-    z-index:2;          /* fixed-box(1) 위에 표시 */
-  }
-  .team-background .team-overlay .overlay-icons{display:flex;gap:1.5vw;}
-  .team-background .team-overlay .ov-icon{
-    width:2.2vw;
-    height:2.2vw; 
-
+  background: linear-gradient(to right, #7A86D8, #DFDFD2);
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
+.team-background .profile-scroll {
+  max-height: calc(100vh - 15vw);
+  overflow-y: auto;
+  position: relative;
+  margin-right: -0.4vw;
+  padding-right: 1.5vw;
+}
+.team-background .profile-scroll::-webkit-scrollbar {
+  width: 0.4vw;
+}
+.team-background .profile-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.team-background .profile-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, .6);
+  border-radius: 0.2vw;
+}
+
+.team-background .bookmark-shape {
+  width: 2vw;
+  height: 8vw;
+  background: #fff;
+  border-radius: 0 20px 20px 0;
+  transition: top 0.25s ease;
+}
+
+/* === 상단 오버레이 바 === */
+.team-background .team-overlay {
+  position: absolute;
+  left: 10vw;
+  top: 4vw;
+  right: 0;
+  height: 4vw;
+  background: #C1C5E0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 2vw;
+  z-index: 2;
+}
+.team-background .team-overlay .overlay-icons {
+  display: flex;
+  gap: 1.5vw;
+}
+.team-background .team-overlay .ov-icon {
+  width: 2.2vw;
+  height: 2.2vw;
+}
 .ov-icon {
-    color: #5A5A5A;
-    fill:   #5A5A5A;   /* IonIcons 계열 */
-    stroke: #5A5A5A;   /* Outline 계열 */
+  color: #5A5A5A;
+  fill: #5A5A5A;
+  stroke: #5A5A5A;
+}
+
+.team-background .manage-btn {
+  position: fixed;
+  right: 2vw;
+  bottom: 2vw;
+  background: linear-gradient(135deg, #D5D7E2 0%, #8A94DA 100%);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 1vw 5vw;
+  font-size: 1.2vw;
+  border-radius: 2vw;
+  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, .15);
+  z-index: 3;
+}
+
+/* === 설명 팝업 튜토리얼 === */
+.guide-dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 5;
+}
+
+/* 닫기 버튼: 화면 오른쪽 위 고정 */
+.guide-closeX {
+  position: fixed;
+  top: 1.5vw;
+  right: 2vw;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 50%;
+  background: transparent;
+  border: 0.25vw solid #fff;
+  color: #fff;
+  font-size: 1.6vw;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+}
+.guide-closeX:hover {
+  background: rgba(255, 255, 255, .15);
+}
+
+/* 말풍선 공통 */
+.guide-bubble {
+  position: absolute;
+  background: white;
+  border-radius: 1vw;
+  padding: 2vw 2.5vw 3.5vw;
+  max-width: 60vw;
+  box-shadow: 0 0.5vw 1vw rgba(0,0,0,0.3);
+  font-size: 1.3vw;
+  text-align: center;
+  z-index: 6;
+}
+
+/* 말풍선 꼬리 */
+.bubble-manage:after {
+  content: "";
+  position: absolute;
+  bottom: -1vw;
+  right: 3vw;
+  border-style: solid;
+  border-width: 1vw 1vw 0 1vw;
+  border-color: #fff transparent transparent transparent;
+}
+.bubble-file:after {
+  content: "";
+  position: absolute;
+  top: -1vw;
+  right: 4vw;
+  border-style: solid;
+  border-width: 0 1vw 1vw 1vw;
+  border-color: transparent transparent #fff transparent;
+}
+.bubble-people:after {
+  content: "";
+  position: absolute;
+  top: -1vw;
+  right: 3vw;
+  border-style: solid;
+  border-width: 0 1vw 1vw 1vw;
+  border-color: transparent transparent #fff transparent;
+}
+
+/* 내부 버튼 */
+.guide-bubble .guide-next {
+  position: absolute;
+  bottom: 1.5vw;
+  right: 1.5vw;
+  font-size: 1.3vw;
+  font-weight: 700;
+  color: #5A5A5A;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5vw 1vw;
+}
+.guide-bubble .guide-next:hover {
+  opacity: 0.85;
+}
+
+.bubble-manage {
+  right: 10vw;
+  bottom: 8.5vw;
+}
+.bubble-file {
+  top: 9vw;
+  right: 1.9vw;
+}
+.bubble-people {
+  right: 0vw;
+  top: 9vw;
+}
+
+.team-background .member-panel {
+  position: fixed;
+  top: 8.1vw;
+  right: 0;
+  bottom: 0;
+  width: 23vw;
+  background: #C1C5E0;
+  overflow-y: auto;
+  z-index: 4;
+}
+.invite-icon {
+  position: fixed;
+  right: 1.8vw;
+  bottom: 2vw;
+  width: 2.5vw;
+  height: 2.5vw;
+  color: #5A5A5A;
+  cursor: pointer;
+  z-index: 5;
+}
+
+@media (max-width: 1024px) {
+  .team-background .profile-scroll { max-height: calc(100vh - 18vw); padding-right: 1.8vw; }
+  .team-background .team-overlay { height: 5vw; left: 12vw; }
+  .team-background .team-overlay .ov-icon { width: 3vw; height: 3vw; }
+  .team-background .manage-btn { font-size: 1.6vw; padding: 1.2vw 5vw; border-radius: 2.5vw; }
+  .guide-closeX { width: 3vw; height: 3vw; font-size: 3vw; }
+  .guide-bubble { font-size: 1.5vw; border-radius: 2vw; }
+  .guide-next { font-size: 1.6vw; }
+  .bubble-file { right: 3vw; }
+  .bubble-people { right: 0vw; top: 10vw; }
+  .team-background .member-panel { width: 33vw; top: 9.2vw; }
+}
+
+@media (max-width: 768px) {
+  .team-background .profile-scroll { max-height: calc(100vh - 12vw) !important; padding-right: 2.6vw; }
+  .team-background .team-overlay { height: 7vw; left: 14vw; }
+  .team-background .team-overlay .ov-icon { width: 4vw; height: 4vw; }
+  .team-background .manage-btn { font-size: 2vw; padding: 1.4vw 5vw; border-radius: 3.2vw; }
+  .guide-closeX { width: 4vw; height: 4vw; font-size: 3vw; }
+  .guide-bubble { font-size: 2vw; border-radius: 2vw; }
+  .guide-next { font-size: 2vw!important; }
+  .bubble-manage {
+    right: 10vw;
+    bottom: 10vw;
   }
-
-  .team-background .manage-btn{
-    position:fixed; right:2vw; bottom:2vw;
-    background:linear-gradient(135deg,#D5D7E2 0%,#8A94DA 100%);
-    color:#fff; border:none; font-weight:600; cursor:pointer;
-    padding:1vw 5vw; font-size:1.2vw; border-radius:2vw;
-    box-shadow:0 0.4vw 0.8vw rgba(0,0,0,.15); z-index:3;
+  .bubble-file {
+    top: 13vw;
+    right: 4.5vw;
   }
-
-  .guide-dim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:5;}
-
-  /* topbar */
-  .guide-topbar{position:fixed;top:1.5vw;right:2vw;display:flex;align-items:center;gap:1vw;z-index:7;}
-  .guide-label{color:#fff;font-size:1.2vw;font-weight:600;}
-  .guide-closeX{width:3vw;height:3vw;border-radius:50%;background:transparent;border:0.25vw solid #fff;color:#fff;font-size:1.6vw;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;}
-  .guide-closeX:hover{background:rgba(255,255,255,.15);}
-  
-  /* 말풍선 공통 */
-  .guide-bubble{position:absolute;background:#fff;border-radius:1vw;padding:2vw 3vw;max-width:60vw;box-shadow:0 0.5vw 1vw rgba(0,0,0,.3);font-size:1.2vw;line-height:1.6;text-align:center;display:flex;flex-direction:column;align-items:center;}
-  .guide-bubble:after{content:"";position:absolute;border-style:solid;}
-  
-  /* 위치 */
-  .bubble-manage{right:10vw;bottom:8.5vw;}
-  .bubble-manage:after{bottom:-1vw;right:3vw;border-width:1vw 1vw 0 1vw;border-color:#fff transparent transparent transparent;}
-  
-  .bubble-file{right:2vw;top:9vw;}
-  .bubble-file:after{top:-1vw;right:4vw;border-width:0 1vw 1vw 1vw;border-color:transparent transparent #fff transparent;}
-  
-  .bubble-people{right:1vw;top:9vw;}
-  .bubble-people:after{top:-1vw;right:3vw;border-width:0 1vw 1vw 1vw;border-color:transparent transparent #fff transparent;}
-  
-  /* 다음/종료 버튼 (텍스트만) */
-  .guide-next{align-self:flex-end;margin-top:1vw;background:none;color:#5A5A5A;border:none;padding:0;font-size:1.1vw;font-weight:700;cursor:pointer;}
-  .guide-next:hover{text-decoration:underline;opacity:.85;}
-
-/* 기존 정의를 찾아서 ↓ 값만 수정 */
-.team-background .member-panel{
-  position:fixed;
-  top:8.1vw; right:0; bottom:0;
-  width:23vw;
-  background:#C1C5E0;
-  overflow-y:auto;
-  z-index:4;          /* ← 1 → 4 (fixed‑box(1)·overlay(2)보다 위) */
+  .bubble-people { right: 0.2vw; top: 11vw; }
+  .team-background .member-panel { width: 40vw; top: 11.3vw; }
+  .invite-icon { width: 5vw; height: 5vw; }
 }
 
-/* 아이콘은 패널 위에 남도록 한 칸만 더 높게 */
-.invite-icon{
-  position:fixed; right:1.8vw; bottom:2vw;
-  width:2.5vw; height:2.5vw;
-  color:#5A5A5A; cursor:pointer;
-  z-index:5;          /* 패널보다 1 크게 */
+@media (max-width: 480px) {
+  .team-background .profile-scroll { max-height: calc(100vh - 15vw) !important; padding-right: 1.5vw; }
+  .team-background .team-overlay { height: 12vw; left: 14vw; }
+  .team-background .team-overlay .ov-icon { width: 6vw; height: 6vw; }
+  .team-background .manage-btn { font-size: 3vw; padding: 2.2vw 6.5vw; border-radius: 4.5vw; }
+  .guide-closeX { width: 5.5vw; height: 5.5vw; font-size: 4vw; }
+  .guide-bubble { font-size: 3vw; border-radius: 3vw; }
+  .guide-next { font-size: 3vw!important; }
+  .bubble-people { right: 1.5vw; top: 16vw; }
+  .bubble-manage {
+    right: 10vw;
+    bottom: 13vw;
+  }
+  .bubble-file {
+    top: 16vw;
+    right: 7.5vw;
+  }
+  .team-background .member-panel { width: 55vw; top: 16.2vw; }
+  .invite-icon { width: 7vw; height: 7vw; }
 }
-  
-
-  @media (max-width: 1024px) { 
-    .team-background .profile-scroll { max-height: calc(100vh - 18vw); padding-right:1.8vw;} 
-    .team-background .team-overlay{height:5vw;left:12vw;}
-    .team-background .team-overlay .ov-icon{width:3vw;height:3vw;}
-    .team-background .manage-btn{font-size:1.6vw;padding:1.2vw 5vw;border-radius:2.5vw;}
-    .guide-closeX{width:3vw;height:3vw;font-size:3vw;}
-    .guide-bubble{font-size:1.5vw;border-radius:2vw;}
-    .guide-next{font-size:1.6vw;}
-    .bubble-file{right:3vw;}
-    .bubble-people{right:0vw;top:10vw;}
-    .team-background .member-panel{
-      width:33vw;top:9.2vw;
-    }
-    
-}
-  @media (max-width:  768px) { 
-    .team-background .profile-scroll { max-height: calc(100vh - 12vw)!important; padding-right:2.6vw;}
-    .team-background .team-overlay{height:7vw;left:14vw;}
-    .team-background .team-overlay .ov-icon{width:4vw;height:4vw;}
-    .team-background .manage-btn{font-size:2vw;padding:1.4vw 5vw;border-radius:3.2vw;} 
-    .guide-label{font-size:2vw;}
-    .guide-closeX{width:4vw;height:4vw;font-size:3vw;}
-    .guide-bubble{font-size:2vw;border-radius:2vw;}
-    .guide-next{font-size:1.8vw;}
-    .bubble-file{right:3vw;}
-    .bubble-people{right:0.2vw;top:10vw;}
-    .team-background .member-panel{width:40vw;top:11.3vw;}
-    .invite-icon{width:5vw;height:5vw;}
-}
-  @media (max-width:  480px) { 
-    .team-background .profile-scroll { max-height: calc(100vh - 15vw)!important; padding-right:1.5vw;} 
-    .team-background .team-overlay{height:12vw;left:14vw;}
-    .team-background .team-overlay .ov-icon{width:6vw;height:6vw;}
-    .team-background .manage-btn{font-size:3vw;padding:2.2vw 6.5vw;border-radius:4.5vw;}
-    .guide-label{font-size:3vw;}
-    .guide-closeX{width:5.5vw;height:5.5vw;font-size:4vw;}
-    .guide-bubble{font-size:3vw;border-radius:3vw;}
-    .guide-next{font-size:3vw;}
-    .bubble-file{right:5.5vw;top:13vw;}
-    .bubble-people{right:1.5vw;top:13vw;}
-    .team-background .member-panel{width:55vw;}
-    .invite-icon{width:7vw;height:7vw;}
-    .team-background .member-panel{
-      top:16.2vw;
-    }
-}
-  

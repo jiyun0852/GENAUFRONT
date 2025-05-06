@@ -138,8 +138,11 @@ function TeamSpace() {
             {guideStep===0&&(<p>할 일을 카테고리화 할 수 있는 목록을<br/>생성하고, 이름 변경·삭제를 할 수 있습니다.<br/><strong>1 / 3</strong></p>)}
             {guideStep===1&&(<p>팀스페이스 내에서 업로드했던 모든 파일들을<br/>확인하고 다시 다운로드 받을 수 있습니다.<br/><strong>2 / 3</strong></p>)}
             {guideStep===2&&(<p>팀스페이스에 참여 중인 팀원들을 확인하고<br/>초대 링크를 보낼 수 있습니다.<br/><strong>3 / 3</strong></p>)}
+          
+            <button className="guide-next" onClick={nextGuide}>
+              {guideStep < 2 ? '다음 >>' : '종료'}
+            </button>
           </div>
-          <button className="guide-next"  onClick={nextGuide}>{guideStep<2?'다음 >>':'종료'}</button>
           <button className="guide-closeX" onClick={closeGuide}>×</button>
         </div>
       )}
@@ -159,17 +162,4 @@ function TeamSpace() {
 }
 
 export default TeamSpace;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
