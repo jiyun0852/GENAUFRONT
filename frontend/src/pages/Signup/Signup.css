@@ -14,7 +14,7 @@
 .page {
   width: 70vw; /* 화면 크기에 비례한 크기 */
   max-width: 800px;
-  height: 95vh;
+  height: 98vh;
   background-color: #5B5B5B;
   border-radius: 6px;
 }

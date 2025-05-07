@@ -152,9 +152,10 @@ function TeamSpace() {
       {/* 팀원 초대 팝업 */}
       {showInvite && (
         <InvitePopup
-          teamName={rows.find(r => r.id===activeTeamId)?.name || '팀 스페이스'}
-          onClose={()=>setShowInvite(false)}
-        />
+        teamId={activeTeamId} // ✅ 숫자형 ID 전달
+        teamName={rows.find(r => r.id === activeTeamId)?.name || '팀 스페이스'}
+        onClose={() => setShowInvite(false)}
+      />
   )}
 
     </div>
