@@ -3,42 +3,50 @@ import './InvitePopup.css';
 
 function InvitePopup({ teamId, teamName, onClose }) {
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const [alert, setAlert] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setError(validateEmail(value) ? '' : '올바른 이메일 주소를 입력하세요.');
+  };
+
   const sendInvite = async () => {
-    if (!email.trim()) return;
+    if (!validateEmail(email)) {
+      setError('올바른 이메일 주소를 입력하세요.');
+      return;
+    }
+
     setLoading(true);
-    setMessage('');
+    setError('');
+    setAlert('');
+
     try {
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/invitations`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          teamId,                    // ✅ 올바른 teamId 사용
-          email: email.trim(),
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamId, email: email.trim() }),
       });
-  
-      // JSON 응답 본문을 먼저 추출
+
       const data = await response.json();
-  
-      if (!response.ok) {
-        console.error('[서버 응답 오류]', data); // 🔍 로그 찍기
-        throw new Error(data.message || '초대 전송 실패');
-      }
-  
-      setMessage(`초대 링크가 전송되었습니다. 유효기간: ${new Date(data.expiresAt).toLocaleString()}`);
+      if (!response.ok) throw new Error(data.message || '초대 전송 실패');
+
+      setAlert(`초대 링크가 전송되었습니다.\n(유효기간: ${new Date(data.expiresAt).toLocaleString()})`);
+      setEmail('');
     } catch (err) {
-      console.error('[초대 실패]', err); // 🔍 오류 내용 콘솔에 출력
-      setMessage(err.message || '에러가 발생했습니다.');
+      console.error('[초대 실패]', err);
+      setAlert(`${err.message || '에러가 발생했습니다.'}`);
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="invite-dim">
@@ -46,31 +54,31 @@ function InvitePopup({ teamId, teamName, onClose }) {
         <button className="invite-close" onClick={onClose}>×</button>
 
         <h2 className="invite-title">
-          이메일로&nbsp; <span className="tn">{teamName}</span> 에 초대하기
+          이메일로 <span className="tn">{teamName}</span> 에 초대하기
         </h2>
 
-        <input
-          type="email"
-          placeholder="example@email.com"
-          className="invite-input"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
+        <div className="invite-input-wrapper">
+          <input
+            type="email"
+            placeholder="example@email.com"
+            className="invite-input"
+            value={email}
+            onChange={handleEmailChange}
+          />
+          {error && <p className="invite-error">{error}</p>}
+        </div>
 
-        <button
-          className="invite-submit"
-          onClick={sendInvite}
-          disabled={loading}
-        >
+        <button className="invite-submit" onClick={sendInvite} disabled={loading}>
           {loading ? '전송 중...' : '전송'}
         </button>
 
-        {message && <p className="invite-message">{message}</p>}
+        {alert && <div className="invite-alert">{alert}</div>}
       </div>
     </div>
   );
 }
 
 export default InvitePopup;
+
 
 

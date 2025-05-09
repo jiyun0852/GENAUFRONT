@@ -85,19 +85,19 @@ function AcceptInvitation() {
   return (
     <div className="accept-wrapper">
       <div className="accept-box">
-        <h2 className="accept-title">GENAU 팀 초대</h2>
         {loading ? (
           <p className="accept-message">유효성 확인 중...</p>
         ) : error ? (
           <p className="accept-error">❌ {error}</p>
         ) : accepted && showWelcome ? (
           <div className="welcome-popup">
-            <h3>🎉 <strong>{teamName}</strong>에 오신 걸 환영합니다!</h3>
+            <h3># <strong>{teamName}</strong>에 오신 걸 환영합니다!</h3>
             <p>{teamName}의 팀스페이스입니다.</p>
             <div className="welcome-desc">{teamDesc}</div>
           </div>
         ) : (
           <>
+          <h2 className="accept-title">GENAU 팀 초대</h2>
             <p className="accept-message">
               <strong>{email}</strong>님, <strong>{teamName}</strong>에 초대되었습니다.
             </p>

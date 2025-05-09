@@ -60,19 +60,39 @@
   color: #7A86D8;
 }
 
+/* 입력란 + 에러메시지 래퍼 */
+.invite-input-wrapper {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* 입력란 */
 .invite-input {
   width: 100%;
   max-width: 23vw;
-  margin: 0 auto;
   padding: 0.9vw 1vw;
   font-size: 1.1vw;
   border: 2px solid #ccc;
   border-radius: 0.6vw;
+  box-sizing: border-box;
 }
 .invite-input:focus {
   outline: none;
   border-color: #7A86D8;
+}
+
+/* 이메일 유효성 오류 메시지 */
+.invite-error {
+  width: 100%;
+  max-width: 23vw;
+  font-size: 0.95vw;
+  color: #d93025;
+  text-align: left;
+  padding-left: 0.2vw;   /* ⬅️ 입력란의 padding-left와 동일하게 */
+  box-sizing: border-box;
+  margin-top: 0.4vw;
 }
 
 /* 전송 버튼 */
@@ -93,6 +113,15 @@
   opacity: 0.9;
 }
 
+/* 성공 메시지 */
+.invite-alert {
+  font-size: 1vw;
+  color: #444;
+  white-space: pre-line;
+  margin-top: -0.6vw;
+  text-align: center;
+}
+
 /* 반응형 */
 @media (max-width: 1024px) {
   .invite-box {
@@ -104,12 +133,13 @@
     font-size: 2.3vw;
   }
   .invite-input {
-    width: 100%;
-    max-width: 38vw; 
-    min-width: 360px;
-    margin: 0 auto;  
     font-size: 1.8vw;
     padding: 1.8vw;
+    max-width: 38vw;
+  }
+  .invite-error {
+    font-size: 1.3vw;
+    max-width: 38vw;
   }
   .invite-submit {
     font-size: 1.8vw;
@@ -119,8 +149,6 @@
     font-size: 3vw;
   }
 }
-
-
 
 @media (max-width: 768px) {
   .invite-box {
@@ -135,6 +163,10 @@
     padding: 2vw;
     max-width: 50vw;
     border-radius: 1.3vw;
+  }
+  .invite-error {
+    font-size: 1.6vw;
+    max-width: 50vw;
   }
   .invite-submit {
     font-size: 2vw;
@@ -158,6 +190,10 @@
     padding: 2vw;
     max-width: 50vw;
     border-radius: 1.4vw;
+  }
+  .invite-error {
+    font-size: 1.9vw;
+    max-width: 50vw;
   }
   .invite-submit {
     font-size: 2.5vw;
