@@ -30,6 +30,8 @@ function TeamSpace() {
   const [teamInfo, setTeamInfo] = useState(null);
   const [showTeamInfo, setShowTeamInfo] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
+  const [guideStep, setGuideStep] = useState(0);
 
   const userId = Number(localStorage.getItem('userId') || 0);
   const userName = localStorage.getItem('username') || '유저';
@@ -38,8 +40,8 @@ function TeamSpace() {
 
   const scrollRef = useRef(null);
   const bookmarkRef = useRef(null);
+  const GUIDE_KEY = `genau:tutorialClosed:${teamId ?? 'global'}`;
 
-  // ✅ 팀 목록 불러오기
   const fetchTeamsByUserId = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/teams/users/${userId}/teams`);
@@ -57,6 +59,13 @@ function TeamSpace() {
   useEffect(() => {
     setActiveTeamId(Number(teamId));
   }, [teamId]);
+
+  useEffect(() => {
+    if (!localStorage.getItem(GUIDE_KEY)) {
+      setShowGuide(true);
+      setGuideStep(0);
+    }
+  }, [GUIDE_KEY]);
 
   useEffect(() => {
     if (showMembers && activeTeamId) {
@@ -119,9 +128,16 @@ function TeamSpace() {
     setShowTeamInfo(false);
   };
 
+  const nextGuide = () => (guideStep < 2 ? setGuideStep(s => s + 1) : closeGuide());
+  const closeGuide = () => {
+    localStorage.setItem(GUIDE_KEY, 'true');
+    setShowGuide(false);
+  };
+
+  const guideClass = ['bubble-manage', 'bubble-file', 'bubble-people'][guideStep];
+
   return (
     <div className="main-background team-background">
-      {/* 왼쪽 팀 프로필 */}
       <div className="left-icons">
         <div className="bookmark-user-group">
           <div className="profile-scroll" ref={scrollRef}>
@@ -143,7 +159,6 @@ function TeamSpace() {
         </div>
       </div>
 
-      {/* 상단 아이콘 */}
       <div className="team-overlay">
         <div className="overlay-icons">
           <IoFileTrayFullOutline className="ov-icon" />
@@ -151,7 +166,6 @@ function TeamSpace() {
         </div>
       </div>
 
-      {/* 팀원 리스트 */}
       {showMembers && (
         <>
           <div className="member-panel">
@@ -168,16 +182,28 @@ function TeamSpace() {
         </>
       )}
 
-      {/* 팝업들 */}
       {isPopupOpen && <Popup onClose={() => setIsPopupOpen(false)} onTeamCreated={onCreated} />}
       {showInvite && <InvitePopup teamId={activeTeamId} teamName={rows.find(r => r.id === activeTeamId)?.name || ''} onClose={() => setShowInvite(false)} />}
       {showTeamInfo && teamInfo && <TeamInfoPopup teamInfo={teamInfo} currentUserId={userId} onClose={() => setShowTeamInfo(false)} onUpdatedOrDeleted={handleUpdateOrDelete} />}
 
-      {/* 우측 고정 아이콘 */}
       <div className="fixed-icons">
         <LuBell className="icon" /><FiSettings className="icon" />
       </div>
       <div className="fixed-box" />
+
+      {showGuide && (
+        <div className="guide-dim">
+          <div className={`guide-bubble ${guideClass}`}>
+            {guideStep === 0 && (<p>할 일을 카테고리화 할 수 있는 목록을<br />생성하고, 이름 변경·삭제를 할 수 있습니다.<br /><strong>1 / 3</strong></p>)}
+            {guideStep === 1 && (<p>팀스페이스 내에서 업로드했던 모든 파일들을<br />확인하고 다시 다운로드 받을 수 있습니다.<br /><strong>2 / 3</strong></p>)}
+            {guideStep === 2 && (<p>팀스페이스에 참여 중인 팀원들을 확인하고<br />초대 링크를 보낼 수 있습니다.<br /><strong>3 / 3</strong></p>)}
+            <button className="guide-next" onClick={nextGuide}>
+              {guideStep < 2 ? '다음 >>' : '종료'}
+            </button>
+          </div>
+          <button className="guide-closeX" onClick={closeGuide}>×</button>
+        </div>
+      )}
     </div>
   );
 }
