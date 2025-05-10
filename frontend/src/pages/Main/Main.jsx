@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Main.css';
 import { LuBell } from 'react-icons/lu';
 import { FiSettings } from 'react-icons/fi';
@@ -9,28 +9,38 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const COLORS = ['#7A86D8', '#D88A7A', '#7AD8A3', '#D7D87A', '#B47AD8', '#7AD8D5', '#D87AB3'];
 
+function getColorForName(name) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return COLORS[Math.abs(hash) % COLORS.length];
+}
+
 function Main() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [teams, setTeams] = useState([]);
-
   const scrollRef = useRef(null);
   const bmRef = useRef(null);
   const nav = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    setTeams(JSON.parse(localStorage.getItem('teams')) || []);
-  }, []);
-
   const userName = localStorage.getItem('username') || '유저';
+  const userId = Number(localStorage.getItem('userId') || 0);
 
-  const getColorForName = (name) => {
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  const fetchTeams = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/teams/users/${userId}/teams`);
+      const data = await res.json();
+      setTeams(data);
+    } catch (err) {
+      console.error('팀 목록 불러오기 실패:', err);
     }
-    return COLORS[Math.abs(hash) % COLORS.length];
   };
+
+  useEffect(() => {
+    fetchTeams();
+  }, []);
 
   const rows = [
     {
@@ -57,8 +67,7 @@ function Main() {
     const target = scrollRef.current.querySelectorAll('.profile-row')[idx];
     if (!target) return;
     const bookmarkTop =
-      target.offsetTop +
-      (target.offsetHeight - bmRef.current.offsetHeight) / 2;
+      target.offsetTop + (target.offsetHeight - bmRef.current.offsetHeight) / 2;
     bmRef.current.style.top = `${bookmarkTop}px`;
   };
 
@@ -66,23 +75,29 @@ function Main() {
   const onScroll = () => syncBookmark();
 
   const togglePopup = () => setIsPopupOpen((o) => !o);
-  const handleCreated = (t) => {
-    const updated = [...teams, t];
-    setTeams(updated);
-    localStorage.setItem('teams', JSON.stringify(updated));
+  const handleCreated = () => {
+    fetchTeams(); // 팀 생성 후 목록 다시 로드
   };
 
   return (
     <div className="main-background">
       <div className="left-icons">
         <div className="bookmark-user-group">
-          <div className="profile-scroll" ref={scrollRef} onScroll={onScroll} style={{ position: 'relative' }}>
+          <div
+            className="profile-scroll"
+            ref={scrollRef}
+            onScroll={onScroll}
+            style={{ position: 'relative' }}
+          >
             <div ref={bmRef} className="bookmark-shape" style={{ position: 'absolute', left: '-1.4vw' }} />
             <div className="profile-stack">
               {rows.map((r) => (
                 <div className="profile-row" key={r.id} onClick={r.onClick}>
                   <div className="user-icon-name">
-                    <div className="profile-circle" style={{ backgroundColor: r.color }}>
+                    <div
+                      className="profile-circle"
+                      style={{ backgroundColor: r.color }}
+                    >
                       {r.name.charAt(0).toUpperCase()}
                     </div>
                     <div className="user-name">{r.name}</div>
@@ -90,7 +105,9 @@ function Main() {
                 </div>
               ))}
               <div className="profile-row plus-row" onClick={togglePopup}>
-                <div className="user-icon-name"><div className="plus-icon"><GoPlus /></div></div>
+                <div className="user-icon-name">
+                  <div className="plus-icon"><GoPlus /></div>
+                </div>
               </div>
             </div>
           </div>
@@ -114,5 +131,6 @@ function Main() {
 }
 
 export default Main;
+
 
 

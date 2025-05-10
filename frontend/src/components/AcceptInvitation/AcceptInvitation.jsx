@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { IoClose } from 'react-icons/io5';  // 아이콘 추가
+import { IoClose } from 'react-icons/io5';
 import './AcceptInvitation.css';
 
 function AcceptInvitation() {
@@ -25,14 +25,8 @@ function AcceptInvitation() {
 
     const fetchValidation = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/invitations/validate?token=${token}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          cache: 'no-store'
-        });
-
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/invitations/validate?token=${token}`);
         if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
-
         const data = await res.json();
         if (data.valid) {
           setTeamId(data.teamId);
@@ -64,7 +58,7 @@ function AcceptInvitation() {
       const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/invitations/accept`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token })
+        body: JSON.stringify({ token }),
       });
 
       if (!res.ok) {
@@ -86,7 +80,7 @@ function AcceptInvitation() {
   };
 
   return (
-    <div className="accept-wrapper">
+    <div className={`accept-wrapper${accepted && showWelcome ? ' dim-background' : ''}`}>
       <div className="accept-box">
         {loading ? (
           <p className="accept-message">유효성 확인 중...</p>
@@ -100,7 +94,7 @@ function AcceptInvitation() {
                 setShowWelcome(false);
                 navigate(`/team/${teamId}`);
               }}
-              aria-label="환영 팝업 닫기"
+              aria-label="닫기"
             >
               <IoClose />
             </button>

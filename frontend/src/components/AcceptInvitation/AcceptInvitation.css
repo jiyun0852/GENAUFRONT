@@ -8,6 +8,18 @@
     font-family: 'Noto Sans KR', sans-serif;
   }
   
+/* 어두운 dim 배경 (환영 팝업용) */
+.welcome-dim {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+
   .accept-box {
     background-color: white;
     padding: 3vw 2.5vw;
