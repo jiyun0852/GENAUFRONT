@@ -200,6 +200,66 @@
   z-index: 5;
 }
 
+/* member-panel 내부 콘텐츠 스타일 */
+.member-panel {
+  padding: 2vw 1.5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* 구분선 사용 시 gap 제거 */
+  color: black; /* 🔄 글자색을 검정으로 변경 */
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.2vw;
+  overflow-y: auto;
+}
+
+/* 각 멤버 항목 */
+.member-item {
+  display: flex;
+  align-items: center;
+  padding: 1vw;
+  background-color: transparent;
+  border-bottom: 1px solid white; /* 🔄 흰색 구분선 추가 */
+}
+
+/* 프로필 원형 영역 */
+.member-profile-placeholder {
+  width: 2.5vw;
+  height: 2.5vw;
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 50%;
+  background-color: white;
+  margin-right: 1vw;
+}
+
+/* 멤버 이름 */
+.member-name {
+  font-weight: normal; /* 🔄 bold 해제 */
+  color: black;        /* 🔄 색상 명확히 지정 */
+}
+
+/* 왕관 아이콘 */
+.crown {
+  margin-left: 0.5vw;
+  color: gold;
+  vertical-align: middle;
+  font-size: 1.2vw;
+}
+
+.member-profile-circle {
+  width: 2.4vw;
+  height: 2.4vw;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5vw;
+}
+
+
 @media (max-width: 1024px) {
   .team-background .profile-scroll { max-height: calc(100vh - 18vw); padding-right: 1.8vw; }
   .team-background .team-overlay { height: 5vw; left: 12vw; }

@@ -7,6 +7,8 @@ import Popup from '../../components/Popup/Popup';
 import MainIntro from '../../components/MainIntro/MainIntro';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+const COLORS = ['#7A86D8', '#D88A7A', '#7AD8A3', '#D7D87A', '#B47AD8', '#7AD8D5', '#D87AB3'];
+
 function Main() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [teams, setTeams] = useState([]);
@@ -21,17 +23,26 @@ function Main() {
   }, []);
 
   const userName = localStorage.getItem('username') || '유저';
+
+  const getColorForName = (name) => {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return COLORS[Math.abs(hash) % COLORS.length];
+  };
+
   const rows = [
     {
       id: null,
       name: userName,
-      color: '#8888ff',
+      color: getColorForName(userName),
       onClick: () => nav('/Main'),
     },
     ...teams.map((t) => ({
       id: t.teamId,
       name: t.teamName,
-      color: '#ffffff',
+      color: getColorForName(t.teamName),
       onClick: () => nav(`/team/${t.teamId}`),
     })),
   ];
@@ -65,25 +76,13 @@ function Main() {
     <div className="main-background">
       <div className="left-icons">
         <div className="bookmark-user-group">
-          <div
-            className="profile-scroll"
-            ref={scrollRef}
-            onScroll={onScroll}
-            style={{ position: 'relative' }}
-          >
-            <div
-              ref={bmRef}
-              className="bookmark-shape"
-              style={{ position: 'absolute', left: '-1.4vw' }}
-            />
+          <div className="profile-scroll" ref={scrollRef} onScroll={onScroll} style={{ position: 'relative' }}>
+            <div ref={bmRef} className="bookmark-shape" style={{ position: 'absolute', left: '-1.4vw' }} />
             <div className="profile-stack">
               {rows.map((r) => (
                 <div className="profile-row" key={r.id} onClick={r.onClick}>
                   <div className="user-icon-name">
-                    <div
-                      className="profile-circle"
-                      style={{ backgroundColor: r.color }}
-                    >
+                    <div className="profile-circle" style={{ backgroundColor: r.color }}>
                       {r.name.charAt(0).toUpperCase()}
                     </div>
                     <div className="user-name">{r.name}</div>
@@ -91,11 +90,7 @@ function Main() {
                 </div>
               ))}
               <div className="profile-row plus-row" onClick={togglePopup}>
-                <div className="user-icon-name">
-                  <div className="plus-icon">
-                    <GoPlus />
-                  </div>
-                </div>
+                <div className="user-icon-name"><div className="plus-icon"><GoPlus /></div></div>
               </div>
             </div>
           </div>

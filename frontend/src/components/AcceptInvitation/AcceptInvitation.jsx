@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { IoClose } from 'react-icons/io5';  // 아이콘 추가
 import './AcceptInvitation.css';
 
 function AcceptInvitation() {
   const [params] = useSearchParams();
   const [loading, setLoading] = useState(true);
-  const [valid, setValid] = useState(false);
   const [teamName, setTeamName] = useState('');
   const [teamDesc, setTeamDesc] = useState('');
-  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [error, setError] = useState('');
   const [accepted, setAccepted] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
+  const [teamId, setTeamId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,23 +31,25 @@ function AcceptInvitation() {
           cache: 'no-store'
         });
 
-        if (!res.ok) {
-          throw new Error(`서버 오류: ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
 
         const data = await res.json();
-        console.log('[VALIDATE RESPONSE]', data);
         if (data.valid) {
-          setValid(true);
-          setEmail(data.email);
-          setTeamName(data.teamName || `팀 ID ${data.teamId}`);
-          setTeamDesc(data.teamDesc || '');
+          setTeamId(data.teamId);
+          setUserName(data.userName || data.email);
         } else {
-          setError('초대 링크가 만료되었거나 이미 사용되었습니다.');
+          throw new Error('초대 링크가 만료되었거나 이미 사용되었습니다.');
         }
+
+        const teamRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/teams/${data.teamId}`);
+        if (!teamRes.ok) throw new Error('팀 정보를 불러오는 데 실패했습니다.');
+
+        const teamData = await teamRes.json();
+        setTeamName(teamData.teamName);
+        setTeamDesc(teamData.teamDesc);
       } catch (err) {
         console.error('[VALIDATE ERROR]', err);
-        setError('유효성 확인 중 오류가 발생했습니다.');
+        setError(err.message || '유효성 확인 중 오류가 발생했습니다.');
       } finally {
         setLoading(false);
       }
@@ -69,13 +72,13 @@ function AcceptInvitation() {
         throw new Error(errorText || '수락에 실패했습니다.');
       }
 
+      const result = await res.json();
+      setTeamName(result.teamName);
+      setTeamDesc(result.teamDesc);
+      setTeamId(result.teamId);
+
       setAccepted(true);
       setShowWelcome(true);
-
-      setTimeout(() => {
-        navigate(`/team/${params.get('teamId')}`);
-      }, 2500);
-
     } catch (err) {
       console.error('[ACCEPT ERROR]', err);
       setError(err.message || '초대 수락 중 오류가 발생했습니다.');
@@ -91,15 +94,25 @@ function AcceptInvitation() {
           <p className="accept-error">❌ {error}</p>
         ) : accepted && showWelcome ? (
           <div className="welcome-popup">
+            <button
+              className="welcome-close"
+              onClick={() => {
+                setShowWelcome(false);
+                navigate(`/team/${teamId}`);
+              }}
+              aria-label="환영 팝업 닫기"
+            >
+              <IoClose />
+            </button>
             <h3># <strong>{teamName}</strong>에 오신 걸 환영합니다!</h3>
             <p>{teamName}의 팀스페이스입니다.</p>
             <div className="welcome-desc">{teamDesc}</div>
           </div>
         ) : (
           <>
-          <h2 className="accept-title">GENAU 팀 초대</h2>
+            <h2 className="accept-title">GENAU 팀 초대</h2>
             <p className="accept-message">
-              <strong>{email}</strong>님, <strong>{teamName}</strong>에 초대되었습니다.
+              <strong>{userName}</strong>님, <strong>{teamName}</strong>에 초대되었습니다.
             </p>
             <button className="accept-btn" onClick={handleAccept}>
               초대 수락하기
@@ -112,4 +125,3 @@ function AcceptInvitation() {
 }
 
 export default AcceptInvitation;
-
