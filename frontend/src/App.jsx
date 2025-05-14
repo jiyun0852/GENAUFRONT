@@ -6,9 +6,8 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import VerifyCode from './pages/VerifyCode/VerifyCode';
 import Main from './pages/Main/Main';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
+import { ToastContainer } from 'react-toastify'; 
 import TeamSpace from './components/TeamSpace/TeamSpace';
-import AcceptInvitation from './components/AcceptInvitation/AcceptInvitation'; // 경로는 실제 위치에 맞게 수정
-
 
 function App() {
   return (
@@ -22,8 +21,6 @@ function App() {
         <Route path="/main" element={<Main />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/team/:teamId" element={<TeamSpace />} />
-        <Route path="/invitations/validate" element={<AcceptInvitation />} />
-
       </Routes>
     </Router>
   );

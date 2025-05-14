@@ -7,12 +7,14 @@ function Popup({ onClose, onTeamCreated }) {
   const [userId, setUserId] = useState(null);    // 사용자 ID 상태
 
   useEffect(() => {
-    // 로그인 시 저장된 userId 가져오기
     const storedId = localStorage.getItem('userId');
-    if (storedId && !isNaN(storedId)) {
-      setUserId(Number(storedId));
+    const numericId = Number(storedId);
+
+    if (storedId && !isNaN(numericId) && numericId > 0) {
+      setUserId(numericId);
     } else {
       alert('로그인이 필요합니다.');
+      onClose(); // 팝업 닫기
     }
   }, []);
 

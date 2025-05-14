@@ -1,9 +1,10 @@
 .main-background {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to right, #7A86D8, #DFDFD2);
+  display: flex;
+  flex-direction: column;
   position: relative;
-  overflow: hidden;
 }
 
 .left-icons {

@@ -1,0 +1,249 @@
+/* 📦 메인 작업 영역 */
+.todo-board {
+  position: absolute;
+  top: 8vw;
+  left: 10vw;
+  right: 0.01vw;
+  bottom: 0.2vw;
+
+  padding: 2vw;
+  overflow-x: auto;       /* ✅ 가로 스크롤 가능 */
+  overflow-y: hidden;
+
+  display: flex;
+  flex-wrap: nowrap;      /* ✅ 한 줄로 쭉 나열 */
+  gap: 1.5vw;
+
+  background-color: #f0f0f0;
+
+  z-index: 9;
+}
+
+.todo-board::-webkit-scrollbar {
+  height: 0.8vw;
+}
+.todo-board::-webkit-scrollbar-track {
+  background: transparent;
+}
+.todo-board::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 1vw;
+}
+
+
+/* 🧩 각 카테고리 박스 */
+.category-box {
+  flex: 0 0 auto;
+  width: 18vw;
+  min-height: 12vw;
+  background-color: #D9D9D9;
+  border: 2px solid #d9dbe0;
+  border-radius: 0.5vw;
+
+  display: flex;
+  flex-direction: column;  /* ✅ 세로 정렬 */
+  align-items: center;     /* ✅ 가로 중앙 정렬 */
+  justify-content: flex-start; /* ✅ 세로 상단 정렬 */
+
+  padding: 1vw;
+
+  font-weight: 600;
+  font-size: 1.2vw;
+  color: #3c3c3c;
+  transition: transform 0.2s ease;
+
+  z-index: 10;
+}
+
+
+.category-title {
+  margin-bottom: 1vw;
+  font-size: 1.1vw;
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+}
+
+.todo-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vw;
+  padding: 0.5vw 0;
+}
+
+.todo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6vw;
+  margin-bottom: 0.8vw;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.todo-checkbox {
+  transform: scale(1.2);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 0.2vw;
+}
+
+.todo-checkbox:focus {
+  outline:none;
+  box-shadow: none;
+}
+
+/* 📝 할 일 카드 */
+.todo-card {
+  width: 14.6vw;
+  flex-grow: 1;
+  background: #fff;
+  border-radius: 0.3vw;
+  padding: 1vw;
+  font-size: 0.95vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4vw;
+  transition: box-shadow 0.2s;
+
+  z-index: 13;
+}
+
+.todo-card.done {
+  background: #fff;
+  opacity: 0.6;
+  color: inherit;
+  font-size: inherit;
+  text-decoration: line-through;
+}
+
+.todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.todo-title {
+  color: #333;
+}
+
+.todo-date {
+  font-size: 0.8vw;
+  color: #888;
+}
+
+.todo-content {
+  font-size: 0.9vw;
+  color: #555;
+  white-space: pre-line;
+}
+
+/* ➕ 버튼 */
+.add-todo-btn {
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 2vw;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.add-todo-btn:hover {
+  color: #555;
+}
+
+.todo-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.todo-popup {
+  background: white;
+  padding: 2vw;
+  border-radius: 1vw;
+  width: 26vw;
+  box-shadow: 0 0.8vw 2vw rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+
+.todo-popup h3 {
+  font-size: 1.2vw;
+  margin-bottom: 1vw;
+}
+
+.todo-popup input,
+.todo-popup textarea {
+  padding: 0.8vw;
+  border: 1px solid #ccc;
+  border-radius: 0.6vw;
+  font-size: 1vw;
+  resize: none;
+}
+
+.todo-popup textarea {
+  height: 6vw;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1vw;
+}
+
+.popup-buttons button {
+  padding: 0.6vw 1.2vw;
+  font-size: 1vw;
+  background-color: #4d62d9;
+  color: white;
+  border: none;
+  border-radius: 0.5vw;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.popup-buttons button:hover {
+  background-color: #384bc2;
+}
+
+@media (max-width: 1024px) {
+  .todo-board {
+    left: 12vw;
+    right: 0.01vw;
+    top: 9vw;
+    gap: 2vw;
+    padding: 2.5vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .todo-board {
+    left: 14vw;
+    right: 0.01vw;
+    top: 11vw;
+    gap: 3vw;
+    padding: 3vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .todo-board {
+    left: 14vw;
+    right: 0.01vw;
+    top: 16vw;
+    gap: 3vw;
+    padding: 3vw;
+  }
+}

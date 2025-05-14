@@ -60,28 +60,12 @@
   stroke: #5A5A5A;
 }
 
-.team-background .manage-btn {
-  position: fixed;
-  right: 2vw;
-  bottom: 2vw;
-  background: linear-gradient(135deg, #D5D7E2 0%, #8A94DA 100%);
-  color: #fff;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 1vw 5vw;
-  font-size: 1.2vw;
-  border-radius: 2vw;
-  box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, .15);
-  z-index: 3;
-}
-
 /* === 설명 팝업 튜토리얼 === */
 .guide-dim {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
-  z-index: 5;
+  z-index: 50;
 }
 
 /* 닫기 버튼: 화면 오른쪽 위 고정 */
@@ -117,7 +101,7 @@
   box-shadow: 0 0.5vw 1vw rgba(0,0,0,0.3);
   font-size: 1.3vw;
   text-align: center;
-  z-index: 6;
+  z-index: 51;
 }
 
 /* 말풍선 꼬리 */
@@ -264,7 +248,6 @@
   .team-background .profile-scroll { max-height: calc(100vh - 18vw); padding-right: 1.8vw; }
   .team-background .team-overlay { height: 5vw; left: 12vw; }
   .team-background .team-overlay .ov-icon { width: 3vw; height: 3vw; }
-  .team-background .manage-btn { font-size: 1.6vw; padding: 1.2vw 5vw; border-radius: 2.5vw; }
   .guide-closeX { width: 3vw; height: 3vw; font-size: 3vw; }
   .guide-bubble { font-size: 1.5vw; border-radius: 2vw; }
   .guide-next { font-size: 1.6vw; }
@@ -277,7 +260,6 @@
   .team-background .profile-scroll { max-height: calc(100vh - 12vw) !important; padding-right: 2.6vw; }
   .team-background .team-overlay { height: 7vw; left: 14vw; }
   .team-background .team-overlay .ov-icon { width: 4vw; height: 4vw; }
-  .team-background .manage-btn { font-size: 2vw; padding: 1.4vw 5vw; border-radius: 3.2vw; }
   .guide-closeX { width: 4vw; height: 4vw; font-size: 3vw; }
   .guide-bubble { font-size: 2vw; border-radius: 2vw; }
   .guide-next { font-size: 2vw!important; }

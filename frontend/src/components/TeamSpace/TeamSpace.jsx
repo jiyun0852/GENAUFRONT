@@ -11,6 +11,9 @@ import { FaCrown } from 'react-icons/fa';
 import Popup from '../Popup/Popup';
 import { useParams, useNavigate } from 'react-router-dom';
 
+import Managebtn from '../Managebtn/Managebtn';
+import TodoBoard from '../TodoBoard/TodoBoard';
+
 const COLORS = ['#7A86D8', '#D88A7A', '#7AD8A3', '#D7D87A', '#B47AD8', '#7AD8D5', '#D87AB3'];
 
 function getColorForName(name) {
@@ -30,6 +33,7 @@ function TeamSpace() {
   const [showMembers , setShowMembers ] = useState(false);
   const [showInvite  , setShowInvite  ] = useState(false);
   const [members     , setMembers     ] = useState([]);
+  const [menuItems   , setMenuItems   ] = useState([]);
 
   const { teamId } = useParams();
   const nav        = useNavigate();
@@ -63,6 +67,7 @@ function TeamSpace() {
     }
   }, [showMembers, activeTeamId]);
 
+  const userId = localStorage.getItem("userId");
   const userName = localStorage.getItem('username') || '유저';
 
   const rows = [
@@ -158,7 +163,10 @@ function TeamSpace() {
       </div>
       <div className="fixed-box" />
 
-      <button className="manage-btn list-btn">목록 관리하기&nbsp;+</button>
+      {/* 목록 관리하기 버튼 */}
+      <Managebtn teamId={teamId} menuItems={menuItems} setMenuItems={setMenuItems} />
+
+      <TodoBoard menuItems={menuItems} setMenuItems={setMenuItems} teamId={teamId} userId={userId} />
 
       {showGuide && (
         <div className="guide-dim">
